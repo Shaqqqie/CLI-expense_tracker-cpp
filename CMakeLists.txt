@@ -8,6 +8,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_executable(expense_tracker
     src/main.cpp
+    src/Expense.cpp
+    src/ExpenseTracker.cpp
 )
 
 target_compile_options(expense_tracker PRIVATE
@@ -15,3 +17,5 @@ target_compile_options(expense_tracker PRIVATE
     -Wextra
     -Wpedantic    
 )
+
+target_include_directories(expense_tracker PRIVATE include)
