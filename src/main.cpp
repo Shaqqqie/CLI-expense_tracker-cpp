@@ -11,14 +11,15 @@ int main()
 {
     int input{};
     ExpenseTracker tracker;
+    tracker.LoadExpenses();
     while (true)
     {
         std::cout << "\nExpense tracker\n";
         std::cout << "1. Add expense\n";
         std::cout << "2. View expenses\n";
         std::cout << "3. Show total\n";
-        std::cout << "4. Save expenses\n";
-        std::cout << "5. Load expenses\n";
+        std::cout << "4. Delete expense\n";
+        std::cout << "5. Edit expense\n";
         std::cout << "6. Exit\n";
         std::cout << "Choose an option: ";
 
@@ -51,10 +52,13 @@ int main()
                 tracker.ShowTotal();
                 break;
             case 4:
+                tracker.DeleteExpense();
                 tracker.SaveExpenses();
+                std::cout << "Expense succesfully deleted.\n";
                 break;
             case 5:
-
+                tracker.EditExpense();
+                tracker.SaveExpenses();
                 break;
             case 6:
                 std::cout << "Exiting Expense Tracker...\n";

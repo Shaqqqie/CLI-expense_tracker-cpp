@@ -1,1 +1,6 @@
 Food|1250|Dinner
+Clothing|5005|New T-shirt
+Food|1020|Lunch
+Transport|500|Bus Ticket
+Clothing|1300|New
+Food|6320|Dinner with Family

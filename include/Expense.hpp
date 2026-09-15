@@ -25,4 +25,11 @@ public:
     const std::string &GetCategory() const;
 
     const std::string &GetDescription() const;
+
+    void SetCategory(const std::string &);
+
+    void SetAmountInCents(int);
+
+    void SetDescription(const std::string &);
+
 };

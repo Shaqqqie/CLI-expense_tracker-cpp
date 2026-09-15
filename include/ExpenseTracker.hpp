@@ -9,10 +9,16 @@ class ExpenseTracker
 private:
     std::vector<Expense> expenses;
 
+    int GetValidAmount();
+
 public:
     void AddExpense();
     void ViewExpenses() const;
     void ShowTotal() const;
+    void DeleteExpense();
+    void EditExpense();
 
     void SaveExpenses() const;
+    void LoadExpenses();
+
 };
