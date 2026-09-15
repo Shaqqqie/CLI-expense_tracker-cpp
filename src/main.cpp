@@ -46,8 +46,22 @@ int main()
                 tracker.SaveExpenses();
                 break;
             case 2:
+            {
                 tracker.ViewExpenses();
-                break;
+                char input{};
+                std::cout << "Filter by category?(y/n)\n";
+                std::cin.ignore(
+                    std::numeric_limits<std::streamsize>::max(), '\n');
+                if (std::cin >> input && (input == 'Y' || input == 'y'))
+                {
+                    tracker.ViewExpensesByCategory();
+                    break;
+                }
+                else
+                {
+                    break;
+                }
+            }
             case 3:
                 tracker.ShowTotal();
                 break;

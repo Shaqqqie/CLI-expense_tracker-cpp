@@ -216,11 +216,11 @@ int ExpenseTracker::GetValidAmount()
 {
     int AmountInCents{};
 
-    while(true)
+    while (true)
     {
         std::cout << "Enter amount in cents: ";
 
-        if(std::cin >> AmountInCents && AmountInCents > 0)
+        if (std::cin >> AmountInCents && AmountInCents > 0)
         {
             break;
         }
@@ -231,9 +231,42 @@ int ExpenseTracker::GetValidAmount()
 
         std::cin.ignore(
             std::numeric_limits<std::streamsize>::max(),
-            '\n'
-        );
+            '\n');
     }
 
     return AmountInCents;
+}
+
+void ExpenseTracker::ViewExpensesByCategory() const
+{
+
+    if (expenses.empty())
+    {
+        std::cout << "No expenses to filter by category.\n";
+        std::cout << "Make sure to add expenses first.\n";
+        return;
+    }
+
+    std::cin.ignore(
+        std::numeric_limits<std::streamsize>::max(),
+        '\n');
+
+    std::string category{};
+    std::cout << "Enter category: ";
+    std::getline(std::cin, category);
+    int index{1};
+
+    for (const auto &expense : expenses)
+    {
+        if (expense.GetCategory() == category)
+        {
+            std::cout << index << "." << expense << "\n";
+            ++index;
+        }
+    }
+
+    if (index == 1)
+    {
+        std::cout << "No matching expenses with that category.\n";
+    }
 }

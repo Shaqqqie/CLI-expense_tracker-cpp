@@ -17,6 +17,7 @@ public:
     void ShowTotal() const;
     void DeleteExpense();
     void EditExpense();
+    void ViewExpensesByCategory() const;
 
     void SaveExpenses() const;
     void LoadExpenses();
