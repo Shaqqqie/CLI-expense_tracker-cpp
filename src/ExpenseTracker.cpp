@@ -43,11 +43,7 @@ void ExpenseTracker::viewExpenses() const
 
 void ExpenseTracker::showTotal() const
 {
-    int total{};
-    for (const auto &expense : expenses)
-    {
-        total += expense.getAmount();
-    }
+    int total{calculateTotal()};
 
     std::cout << formatMoney(total) << "\n";
 }
@@ -312,11 +308,7 @@ void ExpenseTracker::showSummary() const
         return;
     }
 
-    int total{};
-    for (const auto &expense : expenses)
-    {
-        total += expense.getAmount();
-    }
+    int total{calculateTotal()};
 
     int average{total / static_cast<int>(expenses.size())};
 
@@ -325,4 +317,16 @@ void ExpenseTracker::showSummary() const
     std::cout << "Number of expenses: " << expenses.size() << "\n";
     std::cout << "Total: " << formatMoney(total) << "\n";
     std::cout << "Average: " << formatMoney(average) << "\n";
+}
+
+int ExpenseTracker::calculateTotal() const
+{
+    int total{};
+
+    for (const auto &expense : expenses)
+    {
+        total += expense.getAmount();
+    }
+
+    return total;
 }

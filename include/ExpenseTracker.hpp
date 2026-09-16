@@ -11,6 +11,7 @@ private:
 
     int getValidAmount() const;
     int getValidChoice(std::size_t max_choices) const;
+    int calculateTotal() const;
 
 public:
     void addExpense();
