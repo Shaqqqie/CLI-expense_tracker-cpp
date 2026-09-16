@@ -108,7 +108,7 @@ void ExpenseTracker::deleteExpense()
     }
     viewExpenses();
     std::cout << "Choose expense to delete(number): ";
-    int expense_to_delete{GetValidChoice(expenses.size())};
+    int expense_to_delete{getValidChoice(expenses.size())};
 
     expenses.erase(expenses.begin() + (expense_to_delete - 1));
 }
@@ -132,7 +132,7 @@ void ExpenseTracker::editExpense()
     std::cout << "3. Description\n";
     std::cout << "4. Cancel\n";
     std::cout << "Choice: ";
-    int edit{GetValidChoice(4)};
+    int edit{getValidChoice(4)};
 
     switch (edit)
     {

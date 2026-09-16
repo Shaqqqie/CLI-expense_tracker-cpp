@@ -43,20 +43,20 @@ int main()
             switch (input)
             {
             case 1:
-                tracker.AddExpense();
+                tracker.addExpense();
                 std::cout << "Expense succesfully added.\n";
-                tracker.SaveExpenses();
+                tracker.saveExpenses();
                 break;
             case 2:
             {
-                tracker.ViewExpenses();
+                tracker.viewExpenses();
                 char input{};
                 std::cout << "Filter by category?(y/n)\n";
                 std::cin.ignore(
                     std::numeric_limits<std::streamsize>::max(), '\n');
                 if (std::cin >> input && (input == 'Y' || input == 'y'))
                 {
-                    tracker.ViewExpensesByCategory();
+                    tracker.viewExpensesByCategory();
                     break;
                 }
                 else
@@ -65,22 +65,22 @@ int main()
                 }
             }
             case 3:
-                tracker.ShowTotal();
+                tracker.showTotal();
                 break;
             case 4:
-                tracker.DeleteExpense();
-                tracker.SaveExpenses();
+                tracker.deleteExpense();
+                tracker.saveExpenses();
                 std::cout << "Expense succesfully deleted.\n";
                 break;
             case 5:
-                tracker.EditExpense();
-                tracker.SaveExpenses();
+                tracker.editExpense();
+                tracker.saveExpenses();
                 break;
             case 6:
-                tracker.SortExpenses();
+                tracker.sortExpenses();
                 break;
             case 7:
-                tracker.ShowSummary();
+                tracker.showSummary();
                 break;
             case 8:
                 std::cout << "Exiting Expense Tracker...\n";
