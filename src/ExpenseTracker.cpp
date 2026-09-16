@@ -1,9 +1,8 @@
-#include <iostream>
-#include <vector>
 #include <string>
 #include <limits>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
 
 #include "ExpenseTracker.hpp"
 #include "Expense.hpp"
@@ -106,23 +105,10 @@ void ExpenseTracker::DeleteExpense()
         return;
     }
     ViewExpenses();
-    int input{};
-    while (true)
-    {
-        std::cout << "Choose expense to delete(number): ";
-        if (std::cin >> input && input > 0 && input <= static_cast<int>(expenses.size()))
-        {
-            break;
-        }
+    std::cout << "Choose expense to delete(number): ";
+    int ExpenseToDelete{GetValidChoice(expenses.size())};
 
-        std::cin.clear();
-
-        std::cin.ignore(
-            std::numeric_limits<std::streamsize>::max(),
-            '\n');
-    }
-
-    expenses.erase(expenses.begin() + (input - 1));
+    expenses.erase(expenses.begin() + (ExpenseToDelete - 1));
 }
 
 void ExpenseTracker::EditExpense()
@@ -134,45 +120,17 @@ void ExpenseTracker::EditExpense()
     }
 
     ViewExpenses();
-    int input{};
-    while (true)
-    {
-        std::cout << "Choose expense to edit(number): ";
+    std::cout << "Choose expense to edit: ";
+    int ExpenseToEdit{GetValidChoice(expenses.size())};
 
-        if (std::cin >> input && input > 0 && input <= static_cast<int>(expenses.size()))
-        {
-            break;
-        }
-
-        std::cin.clear();
-
-        std::cin.ignore(
-            std::numeric_limits<std::streamsize>::max(),
-            '\n');
-    }
-
-    Expense &expense = expenses.at(input - 1);
-    int edit{};
-    while (true)
-    {
-        std::cout << "What would you like to edit?\n";
-        std::cout << "1. Category\n";
-        std::cout << "2. Amount\n";
-        std::cout << "3. Description\n";
-        std::cout << "4. Cancel\n";
-        std::cout << "Choice: ";
-
-        if (std::cin >> edit && edit > 0 && edit <= 4)
-        {
-            break;
-        }
-
-        std::cin.clear();
-
-        std::cin.ignore(
-            std::numeric_limits<std::streamsize>::max(),
-            '\n');
-    }
+    Expense &expense = expenses.at(ExpenseToEdit - 1);
+    std::cout << "What would you like to edit?\n";
+    std::cout << "1. Category\n";
+    std::cout << "2. Amount\n";
+    std::cout << "3. Description\n";
+    std::cout << "4. Cancel\n";
+    std::cout << "Choice: ";
+    int edit{GetValidChoice(4)};
 
     switch (edit)
     {
@@ -269,4 +227,74 @@ void ExpenseTracker::ViewExpensesByCategory() const
     {
         std::cout << "No matching expenses with that category.\n";
     }
+}
+
+int ExpenseTracker::GetValidChoice(std::size_t max)
+{
+    int choice{};
+    while (true)
+    {
+        if (std::cin >> choice && choice > 0 && choice <= static_cast<int>(max))
+        {
+            return choice;
+        }
+
+        std::cout << "Choose a valid option: ";
+
+        std::cin.clear();
+
+        std::cin.ignore(
+            std::numeric_limits<std::streamsize>::max(),
+            '\n');
+    }
+}
+
+void ExpenseTracker::SortExpenses()
+{
+    std::cout << "\nSort expenses by:\n";
+    std::cout << "1. Amount: Low to High\n";
+    std::cout << "2. Amount: High to Low\n";
+    std::cout << "3. Category: A-Z\n";
+    std::cout << "4. Category: Z-A\n";
+    std::cout << "5. Cancel\n";
+    std::cout << "Choice: ";
+    int choice{GetValidChoice(5)};
+
+    if (choice == 1)
+    {
+        std::sort(expenses.begin(), expenses.end(),
+                  [](const Expense &expense_a, const Expense &expense_b)
+                  {
+                      return expense_a.GetAmount() < expense_b.GetAmount();
+                  });
+    }
+    else if (choice == 2)
+    {
+        std::sort(expenses.begin(), expenses.end(),
+                  [](const Expense &expense_a, const Expense &expense_b)
+                  {
+                      return expense_a.GetAmount() > expense_b.GetAmount();
+                  });
+    }
+    else if (choice == 3)
+    {
+        std::sort(expenses.begin(), expenses.end(),
+                  [](const Expense &expense_a, const Expense &expense_b)
+                  {
+                      return expense_a.GetCategory() < expense_b.GetCategory();
+                  });
+    }
+    else if (choice == 4)
+    {
+        std::sort(expenses.begin(), expenses.end(),
+                  [](const Expense &expense_a, const Expense &expense_b)
+                  {
+                      return expense_a.GetCategory() > expense_b.GetCategory();
+                  });
+    }
+    else
+    {
+        return;
+    }
+    ViewExpenses();
 }

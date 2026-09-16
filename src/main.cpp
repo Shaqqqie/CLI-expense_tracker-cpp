@@ -20,7 +20,8 @@ int main()
         std::cout << "3. Show total\n";
         std::cout << "4. Delete expense\n";
         std::cout << "5. Edit expense\n";
-        std::cout << "6. Exit\n";
+        std::cout << "6. Sort expenses\n";
+        std::cout << "7. Exit\n";
         std::cout << "Choose an option: ";
 
         if (!(std::cin >> input))
@@ -32,7 +33,7 @@ int main()
                 std::numeric_limits<std::streamsize>::max(),
                 '\n');
         }
-        else if (input < 1 || input > 6)
+        else if (input < 1 || input > 7)
         {
             std::cout << "\nChoose a valid option\n";
         }
@@ -75,11 +76,14 @@ int main()
                 tracker.SaveExpenses();
                 break;
             case 6:
+                tracker.SortExpenses();
+                break;
+            case 7:
                 std::cout << "Exiting Expense Tracker...\n";
                 break;
             }
 
-            if (input == 6)
+            if (input == 7)
             {
                 break;
             }

@@ -3,6 +3,7 @@
 #include "Expense.hpp"
 #include <iostream>
 #include <vector>
+#include <cstddef>
 
 class ExpenseTracker
 {
@@ -10,6 +11,7 @@ private:
     std::vector<Expense> expenses;
 
     int GetValidAmount();
+    int GetValidChoice(std::size_t);
 
 public:
     void AddExpense();
@@ -18,6 +20,7 @@ public:
     void DeleteExpense();
     void EditExpense();
     void ViewExpensesByCategory() const;
+    void SortExpenses();
 
     void SaveExpenses() const;
     void LoadExpenses();
