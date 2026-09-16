@@ -11,7 +11,7 @@ int main()
 {
     int input{};
     ExpenseTracker tracker;
-    tracker.LoadExpenses();
+    tracker.loadExpenses();
     while (true)
     {
         std::cout << "\nExpense tracker\n";

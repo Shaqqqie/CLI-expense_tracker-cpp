@@ -1,3 +1,4 @@
+#include <iostream>
 #include <string>
 #include <limits>
 #include <fstream>
@@ -6,6 +7,7 @@
 
 #include "ExpenseTracker.hpp"
 #include "Expense.hpp"
+#include "MoneyUtils.hpp"
 
 void ExpenseTracker::addExpense()
 {
@@ -41,13 +43,13 @@ void ExpenseTracker::viewExpenses() const
 
 void ExpenseTracker::showTotal() const
 {
-    unsigned int total{};
+    int total{};
     for (const auto &expense : expenses)
     {
         total += expense.getAmount();
     }
 
-    std::cout << "Total expenses: $" << total / 100 << "." << std::setfill('0') << std::setw(2) << total % 100 << "\n";
+    std::cout << formatMoney(total) << "\n";
 }
 
 void ExpenseTracker::saveExpenses() const
@@ -68,7 +70,7 @@ void ExpenseTracker::saveExpenses() const
     }
 }
 
-void ExpenseTracker::LoadExpenses()
+void ExpenseTracker::loadExpenses()
 {
     std::ifstream file{"data/expenses.txt"};
 
@@ -172,7 +174,7 @@ void ExpenseTracker::editExpense()
     }
 }
 
-int ExpenseTracker::getValidAmount()
+int ExpenseTracker::getValidAmount() const
 {
     int amount_in_cents{};
 
@@ -231,12 +233,12 @@ void ExpenseTracker::viewExpensesByCategory() const
     }
 }
 
-int ExpenseTracker::getValidChoice(std::size_t max)
+int ExpenseTracker::getValidChoice(std::size_t max_choices) const
 {
     int choice{};
     while (true)
     {
-        if (std::cin >> choice && choice > 0 && choice <= static_cast<int>(max))
+        if (std::cin >> choice && choice > 0 && static_cast<std::size_t>(choice) <= max_choices)
         {
             return choice;
         }
@@ -321,6 +323,6 @@ void ExpenseTracker::showSummary() const
     std::cout << "\nExpense Summary\n";
     std::cout << std::setfill('-') << std::setw(20) << "\n";
     std::cout << "Number of expenses: " << expenses.size() << "\n";
-    std::cout << "Total: $" << total / 100 << "." << std::setfill('0') << std::setw(2) << total % 100 << "\n";
-    std::cout << "Average: $" << average / 100 << "." << std::setfill('0') << std::setw(2) << average % 100 << "\n";
+    std::cout << "Total: " << formatMoney(total) << "\n";
+    std::cout << "Average: " << formatMoney(average) << "\n";
 }

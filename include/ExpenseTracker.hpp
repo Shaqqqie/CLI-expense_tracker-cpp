@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Expense.hpp"
-#include <iostream>
 #include <vector>
 #include <cstddef>
 
@@ -10,8 +9,8 @@ class ExpenseTracker
 private:
     std::vector<Expense> expenses;
 
-    int getValidAmount();
-    int getValidChoice(std::size_t);
+    int getValidAmount() const;
+    int getValidChoice(std::size_t max_choices) const;
 
 public:
     void addExpense();
@@ -24,6 +23,6 @@ public:
     void showSummary() const;
 
     void saveExpenses() const;
-    void LoadExpenses();
+    void loadExpenses();
 
 };

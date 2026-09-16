@@ -1,16 +1,18 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
-#include <limits>
+#include <sstream>
+#include <utility>
 
 #include "Expense.hpp"
+#include "MoneyUtils.hpp"
 
 Expense::Expense(std::string expense_category,
                  int expense_amount_in_cents,
                  std::string expense_description)
-    : category{expense_category},
+    : category{std::move(expense_category)},
       amount_in_cents{expense_amount_in_cents},
-      description{expense_description}
+      description{std::move(expense_description)}
 {
 }
 
@@ -33,17 +35,8 @@ std::ostream &operator<<(
     std::ostream &os,
     const Expense &expense)
 {
-    std::ostringstream amount;
-
-    amount << '$';
-    amount << expense.amount_in_cents/ 100;
-    amount << '.';
-    amount << std::setfill('0');
-    amount << std::setw(2);
-    amount << expense.amount_in_cents % 100;
-
     os << std::left << std::setfill(' ') << std::setw(15) << expense.category;
-    os << std::right << std::setw(10) << amount.str();
+    os << std::right << std::setw(10) << formatMoney(expense.amount_in_cents);
     os << std::setfill(' ') << std::right << std::setw(20) << expense.description;
 
     return os;
@@ -63,4 +56,3 @@ void Expense::setDescription(const std::string &new_description)
 {
     description = new_description;
 }
-
