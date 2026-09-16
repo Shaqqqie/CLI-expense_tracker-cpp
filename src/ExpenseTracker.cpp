@@ -298,3 +298,27 @@ void ExpenseTracker::SortExpenses()
     }
     ViewExpenses();
 }
+
+void ExpenseTracker::ShowSummary() const
+{
+
+    if (expenses.empty())
+    {
+        std::cout << "No expenses exist.\n";
+        return;
+    }
+
+     int total{};
+    for (const auto &expense : expenses)
+    {
+        total += expense.GetAmount();
+    }
+
+     int average{total / static_cast<int>(expenses.size())};
+
+    std::cout << "\nExpense Summary\n";
+    std::cout << std::setfill('-') << std::setw(20) << "\n";
+    std::cout << "Number of expenses: " << expenses.size() << "\n";
+    std::cout << "Total: $" << total / 100 << "." << std::setfill('0') << std::setw(2) << total % 100 << "\n";
+    std::cout << "Average: $" << average / 100 << "." << std::setfill('0') << std::setw(2) << average % 100 << "\n";
+}

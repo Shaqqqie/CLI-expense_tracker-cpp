@@ -21,6 +21,7 @@ public:
     void EditExpense();
     void ViewExpensesByCategory() const;
     void SortExpenses();
+    void ShowSummary() const;
 
     void SaveExpenses() const;
     void LoadExpenses();
