@@ -8,28 +8,28 @@ class Expense
 {
 private:
     std::string category;
-    int AmountInCents;
+    int amount_in_cents;
     std::string description;
 
 public:
-    Expense(std::string ExpenseCategory,
-            int ExpenseAmountInCents,
-            std::string ExpenseDescription);
+    Expense(std::string expense_category,
+            int expense_amount_in_cents,
+            std::string expense_description);
 
     friend std::ostream &operator<<(
         std::ostream &os,
         const Expense &expense);
 
-    int GetAmount() const;
+    int getAmount() const;
 
-    const std::string &GetCategory() const;
+    const std::string &getCategory() const;
 
-    const std::string &GetDescription() const;
+    const std::string &getDescription() const;
 
-    void SetCategory(const std::string &);
+    void setCategory(const std::string &);
 
-    void SetAmountInCents(int);
+    void setAmountInCents(int);
 
-    void SetDescription(const std::string &);
+    void setDescription(const std::string &);
 
 };

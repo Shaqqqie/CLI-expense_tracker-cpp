@@ -10,20 +10,20 @@ class ExpenseTracker
 private:
     std::vector<Expense> expenses;
 
-    int GetValidAmount();
-    int GetValidChoice(std::size_t);
+    int getValidAmount();
+    int getValidChoice(std::size_t);
 
 public:
-    void AddExpense();
-    void ViewExpenses() const;
-    void ShowTotal() const;
-    void DeleteExpense();
-    void EditExpense();
-    void ViewExpensesByCategory() const;
-    void SortExpenses();
-    void ShowSummary() const;
+    void addExpense();
+    void viewExpenses() const;
+    void showTotal() const;
+    void deleteExpense();
+    void editExpense();
+    void viewExpensesByCategory() const;
+    void sortExpenses();
+    void showSummary() const;
 
-    void SaveExpenses() const;
+    void saveExpenses() const;
     void LoadExpenses();
 
 };

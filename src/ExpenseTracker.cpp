@@ -7,7 +7,7 @@
 #include "ExpenseTracker.hpp"
 #include "Expense.hpp"
 
-void ExpenseTracker::AddExpense()
+void ExpenseTracker::addExpense()
 {
     std::string category{};
     std::cout << "\nEnter Category: ";
@@ -16,7 +16,7 @@ void ExpenseTracker::AddExpense()
         '\n');
     std::getline(std::cin, category);
 
-    int AmountInCents{GetValidAmount()};
+    int amount_in_cents{getValidAmount()};
 
     std::cin.ignore(
         std::numeric_limits<std::streamsize>::max(),
@@ -25,11 +25,11 @@ void ExpenseTracker::AddExpense()
     std::cout << "Enter a description: ";
     std::getline(std::cin, description);
 
-    Expense expense(category, AmountInCents, description);
+    Expense expense(category, amount_in_cents, description);
     expenses.push_back(expense);
 }
 
-void ExpenseTracker::ViewExpenses() const
+void ExpenseTracker::viewExpenses() const
 {
     std::cout << "\n";
     for (std::size_t i{0}; i < expenses.size(); ++i)
@@ -39,18 +39,18 @@ void ExpenseTracker::ViewExpenses() const
     std::cout << "\n";
 }
 
-void ExpenseTracker::ShowTotal() const
+void ExpenseTracker::showTotal() const
 {
     unsigned int total{};
     for (const auto &expense : expenses)
     {
-        total += expense.GetAmount();
+        total += expense.getAmount();
     }
 
     std::cout << "Total expenses: $" << total / 100 << "." << std::setfill('0') << std::setw(2) << total % 100 << "\n";
 }
 
-void ExpenseTracker::SaveExpenses() const
+void ExpenseTracker::saveExpenses() const
 {
     std::ofstream file{"data/expenses.txt"};
 
@@ -62,7 +62,9 @@ void ExpenseTracker::SaveExpenses() const
 
     for (const auto &expense : expenses)
     {
-        file << expense.GetCategory() << "|" << expense.GetAmount() << "|" << expense.GetDescription() << "\n";
+        file << expense.getCategory()
+             << "|" << expense.getAmount() << "|"
+             << expense.getDescription() << "\n";
     }
 }
 
@@ -90,28 +92,28 @@ void ExpenseTracker::LoadExpenses()
         std::string description{};
         std::getline(stream, description);
 
-        int AmountInCents{std::stoi(amount)};
+        int amount_in_cents{std::stoi(amount)};
 
-        Expense expense(category, AmountInCents, description);
+        Expense expense(category, amount_in_cents, description);
         expenses.push_back(expense);
     }
 }
 
-void ExpenseTracker::DeleteExpense()
+void ExpenseTracker::deleteExpense()
 {
     if (expenses.empty())
     {
         std::cout << "There are no expenses to be deleted.\n";
         return;
     }
-    ViewExpenses();
+    viewExpenses();
     std::cout << "Choose expense to delete(number): ";
-    int ExpenseToDelete{GetValidChoice(expenses.size())};
+    int expense_to_delete{GetValidChoice(expenses.size())};
 
-    expenses.erase(expenses.begin() + (ExpenseToDelete - 1));
+    expenses.erase(expenses.begin() + (expense_to_delete - 1));
 }
 
-void ExpenseTracker::EditExpense()
+void ExpenseTracker::editExpense()
 {
     if (expenses.empty())
     {
@@ -119,11 +121,11 @@ void ExpenseTracker::EditExpense()
         return;
     }
 
-    ViewExpenses();
+    viewExpenses();
     std::cout << "Choose expense to edit: ";
-    int ExpenseToEdit{GetValidChoice(expenses.size())};
+    int expense_to_edit{getValidChoice(expenses.size())};
 
-    Expense &expense = expenses.at(ExpenseToEdit - 1);
+    Expense &expense = expenses.at(expense_to_edit - 1);
     std::cout << "What would you like to edit?\n";
     std::cout << "1. Category\n";
     std::cout << "2. Amount\n";
@@ -139,17 +141,17 @@ void ExpenseTracker::EditExpense()
         std::cin.ignore(
             std::numeric_limits<std::streamsize>::max(),
             '\n');
-        std::string NewCategory{};
+        std::string new_category{};
         std::cout << "Enter New Category: ";
-        std::getline(std::cin, NewCategory);
-        expense.SetCategory(NewCategory);
+        std::getline(std::cin, new_category);
+        expense.setCategory(new_category);
         std::cout << "Edit successful.\n";
         break;
     }
     case 2:
     {
-        int AmountInCents{GetValidAmount()};
-        expense.SetAmountInCents(AmountInCents);
+        int amount_in_cents{getValidAmount()};
+        expense.setAmountInCents(amount_in_cents);
         std::cout << "Edit successful.\n";
         break;
     }
@@ -158,10 +160,10 @@ void ExpenseTracker::EditExpense()
         std::cin.ignore(
             std::numeric_limits<std::streamsize>::max(),
             '\n');
-        std::string NewDescription{};
+        std::string new_description{};
         std::cout << "Enter New Description: ";
-        std::getline(std::cin, NewDescription);
-        expense.SetDescription(NewDescription);
+        std::getline(std::cin, new_description);
+        expense.setDescription(new_description);
         std::cout << "Edit successful.\n";
         break;
     }
@@ -170,15 +172,15 @@ void ExpenseTracker::EditExpense()
     }
 }
 
-int ExpenseTracker::GetValidAmount()
+int ExpenseTracker::getValidAmount()
 {
-    int AmountInCents{};
+    int amount_in_cents{};
 
     while (true)
     {
         std::cout << "Enter amount in cents: ";
 
-        if (std::cin >> AmountInCents && AmountInCents > 0)
+        if (std::cin >> amount_in_cents && amount_in_cents > 0)
         {
             break;
         }
@@ -192,10 +194,10 @@ int ExpenseTracker::GetValidAmount()
             '\n');
     }
 
-    return AmountInCents;
+    return amount_in_cents;
 }
 
-void ExpenseTracker::ViewExpensesByCategory() const
+void ExpenseTracker::viewExpensesByCategory() const
 {
 
     if (expenses.empty())
@@ -216,7 +218,7 @@ void ExpenseTracker::ViewExpensesByCategory() const
 
     for (const auto &expense : expenses)
     {
-        if (expense.GetCategory() == category)
+        if (expense.getCategory() == category)
         {
             std::cout << index << "." << expense << "\n";
             ++index;
@@ -229,7 +231,7 @@ void ExpenseTracker::ViewExpensesByCategory() const
     }
 }
 
-int ExpenseTracker::GetValidChoice(std::size_t max)
+int ExpenseTracker::getValidChoice(std::size_t max)
 {
     int choice{};
     while (true)
@@ -249,7 +251,7 @@ int ExpenseTracker::GetValidChoice(std::size_t max)
     }
 }
 
-void ExpenseTracker::SortExpenses()
+void ExpenseTracker::sortExpenses()
 {
     std::cout << "\nSort expenses by:\n";
     std::cout << "1. Amount: Low to High\n";
@@ -258,14 +260,14 @@ void ExpenseTracker::SortExpenses()
     std::cout << "4. Category: Z-A\n";
     std::cout << "5. Cancel\n";
     std::cout << "Choice: ";
-    int choice{GetValidChoice(5)};
+    int choice{getValidChoice(5)};
 
     if (choice == 1)
     {
         std::sort(expenses.begin(), expenses.end(),
                   [](const Expense &expense_a, const Expense &expense_b)
                   {
-                      return expense_a.GetAmount() < expense_b.GetAmount();
+                      return expense_a.getAmount() < expense_b.getAmount();
                   });
     }
     else if (choice == 2)
@@ -273,7 +275,7 @@ void ExpenseTracker::SortExpenses()
         std::sort(expenses.begin(), expenses.end(),
                   [](const Expense &expense_a, const Expense &expense_b)
                   {
-                      return expense_a.GetAmount() > expense_b.GetAmount();
+                      return expense_a.getAmount() > expense_b.getAmount();
                   });
     }
     else if (choice == 3)
@@ -281,7 +283,7 @@ void ExpenseTracker::SortExpenses()
         std::sort(expenses.begin(), expenses.end(),
                   [](const Expense &expense_a, const Expense &expense_b)
                   {
-                      return expense_a.GetCategory() < expense_b.GetCategory();
+                      return expense_a.getCategory() < expense_b.getCategory();
                   });
     }
     else if (choice == 4)
@@ -289,17 +291,17 @@ void ExpenseTracker::SortExpenses()
         std::sort(expenses.begin(), expenses.end(),
                   [](const Expense &expense_a, const Expense &expense_b)
                   {
-                      return expense_a.GetCategory() > expense_b.GetCategory();
+                      return expense_a.getCategory() > expense_b.getCategory();
                   });
     }
     else
     {
         return;
     }
-    ViewExpenses();
+    viewExpenses();
 }
 
-void ExpenseTracker::ShowSummary() const
+void ExpenseTracker::showSummary() const
 {
 
     if (expenses.empty())
@@ -308,13 +310,13 @@ void ExpenseTracker::ShowSummary() const
         return;
     }
 
-     int total{};
+    int total{};
     for (const auto &expense : expenses)
     {
-        total += expense.GetAmount();
+        total += expense.getAmount();
     }
 
-     int average{total / static_cast<int>(expenses.size())};
+    int average{total / static_cast<int>(expenses.size())};
 
     std::cout << "\nExpense Summary\n";
     std::cout << std::setfill('-') << std::setw(20) << "\n";
