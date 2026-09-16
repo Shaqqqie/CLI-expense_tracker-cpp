@@ -26,9 +26,9 @@ public:
 
     const std::string &getDescription() const;
 
-    void setCategory(const std::string &);
+    void setCategory(const std::string &new_category);
 
-    void setAmountInCents(int);
+    void setAmountInCents(int new_amount_in_cents);
 
     void setDescription(const std::string &);
 
