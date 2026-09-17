@@ -1,11 +1,7 @@
+#include "ExpenseTracker.hpp"
+
 #include <iostream>
 #include <limits>
-#include <vector>
-#include <string>
-#include <iomanip>
-#include <fstream>
-
-#include "ExpenseTracker.hpp"
 
 int main()
 {
@@ -52,30 +48,33 @@ int main()
                 tracker.viewExpenses();
                 char input{};
                 std::cout << "Filter by category?(y/n)\n";
-                std::cin.ignore(
-                    std::numeric_limits<std::streamsize>::max(), '\n');
                 if (std::cin >> input && (input == 'Y' || input == 'y'))
                 {
                     tracker.viewExpensesByCategory();
-                    break;
                 }
-                else
-                {
-                    break;
-                }
+                break;
             }
             case 3:
                 tracker.showTotal();
                 break;
             case 4:
-                tracker.deleteExpense();
-                tracker.saveExpenses();
-                std::cout << "Expense succesfully deleted.\n";
+            {
+                if (tracker.deleteExpense())
+                {
+                    tracker.saveExpenses();
+                    std::cout << "Expense successfully deleted.\n";
+                }
                 break;
+            }
             case 5:
-                tracker.editExpense();
-                tracker.saveExpenses();
+            {
+                if(tracker.editExpense())
+                {
+                    tracker.saveExpenses();
+                    std::cout << "Edit successful.\n";
+                }
                 break;
+            }
             case 6:
                 tracker.sortExpenses();
                 break;
@@ -84,15 +83,8 @@ int main()
                 break;
             case 8:
                 std::cout << "Exiting Expense Tracker...\n";
-                break;
-            }
-
-            if (input == 8)
-            {
-                break;
+                return 0;
             }
         }
     }
-
-    return 0;
 }

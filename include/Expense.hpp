@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <iomanip>
+#include <ostream>
 
 class Expense
 {
@@ -29,6 +29,5 @@ public:
 
     void setAmountInCents(int new_amount_in_cents);
 
-    void setDescription(const std::string &);
-
+    void setDescription(const std::string &new_description);
 };
