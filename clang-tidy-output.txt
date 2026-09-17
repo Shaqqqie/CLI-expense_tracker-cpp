@@ -1,0 +1,266 @@
+[  1%] Building CXX object CMakeFiles/expense_tracker_lib.dir/src/Expense.cpp.o
+/home/sfmoh/projects/expense-tracker-cpp/src/Expense.cpp:16:14: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+   16 | int Expense::getAmount() const
+      | ~~~          ^                
+      | auto                           -> int
+/home/sfmoh/projects/expense-tracker-cpp/src/Expense.cpp:21:29: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+   21 | const std::string &Expense::getCategory() const
+      | ~~~~~~~~~~~~~~~~~~~         ^                  
+      | auto                                            -> const std::string &
+/home/sfmoh/projects/expense-tracker-cpp/src/Expense.cpp:26:29: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+   26 | const std::string &Expense::getDescription() const
+      | ~~~~~~~~~~~~~~~~~~~         ^                     
+      | auto                                               -> const std::string &
+/home/sfmoh/projects/expense-tracker-cpp/src/Expense.cpp:31:15: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+   31 | std::ostream &operator<<(
+      | ~~~~~~~~~~~~~~^
+      | auto 
+   32 |     std::ostream &os,
+   33 |     const Expense &expense)
+      |                            
+      |                             -> std::ostream &
+/home/sfmoh/projects/expense-tracker-cpp/src/Expense.cpp:32:19: warning: parameter name 'os' is too short, expected at least 3 characters [readability-identifier-length]
+   32 |     std::ostream &os,
+      |                   ^
+/home/sfmoh/projects/expense-tracker-cpp/src/Expense.cpp:35:62: warning: 15 is a magic number; consider replacing it with a named constant [readability-magic-numbers]
+   35 |     os << " " << std::left << std::setfill(' ') << std::setw(15) << expense.category;
+      |                                                              ^
+/home/sfmoh/projects/expense-tracker-cpp/src/Expense.cpp:36:35: warning: 10 is a magic number; consider replacing it with a named constant [readability-magic-numbers]
+   36 |     os << std::right << std::setw(10) << formatMoney(expense.amount_in_cents);
+      |                                   ^
+/home/sfmoh/projects/expense-tracker-cpp/src/Expense.cpp:37:35: warning: 20 is a magic number; consider replacing it with a named constant [readability-magic-numbers]
+   37 |     os << std::right << std::setw(20) << expense.description;
+      |                                   ^
+[  1%] Building CXX object CMakeFiles/expense_tracker_lib.dir/src/ExpenseTracker.cpp.o
+/home/sfmoh/projects/expense-tracker-cpp/src/ExpenseTracker.cpp:123:22: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+  123 | bool ExpenseTracker::deleteExpense()
+      | ~~~~                 ^              
+      | auto                                 -> bool
+/home/sfmoh/projects/expense-tracker-cpp/src/ExpenseTracker.cpp:138:22: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+  138 | bool ExpenseTracker::editExpense()
+      | ~~~~                 ^            
+      | auto                               -> bool
+/home/sfmoh/projects/expense-tracker-cpp/src/ExpenseTracker.cpp:159:5: warning: switching on non-enum value without default case may not cover all cases [bugprone-switch-missing-default-case]
+  159 |     switch (edit)
+      |     ^
+/home/sfmoh/projects/expense-tracker-cpp/src/ExpenseTracker.cpp:193:21: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+  193 | int ExpenseTracker::getValidAmount() const
+      | ~~~                 ^                     
+      | auto                                       -> int
+/home/sfmoh/projects/expense-tracker-cpp/src/ExpenseTracker.cpp:193:21: warning: method 'getValidAmount' can be made static [readability-convert-member-functions-to-static]
+  193 | int ExpenseTracker::getValidAmount() const
+      |                     ^                ~~~~~
+/home/sfmoh/projects/expense-tracker-cpp/src/ExpenseTracker.cpp:252:21: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+  252 | int ExpenseTracker::getValidChoice(std::size_t max_choices) const
+      | ~~~                 ^                                            
+      | auto                                                              -> int
+/home/sfmoh/projects/expense-tracker-cpp/src/ExpenseTracker.cpp:252:21: warning: method 'getValidChoice' can be made static [readability-convert-member-functions-to-static]
+  252 | int ExpenseTracker::getValidChoice(std::size_t max_choices) const
+      |                     ^                                       ~~~~~
+/home/sfmoh/projects/expense-tracker-cpp/src/ExpenseTracker.cpp:257:49: warning: comparison between 'signed' and 'unsigned' integers [modernize-use-integer-sign-comparison]
+   11 |         if (std::cin >> choice && choice > 0 && static_cast<std::size_t>(choice) <= max_choices)
+      |                                                 ^~~~~~~~~~~~~~~~~~~~~~~~~      ~~~~            
+      |                                                 std::cmp_less_equal(           ,               )
+/home/sfmoh/projects/expense-tracker-cpp/src/ExpenseTracker.cpp:281:31: warning: 5 is a magic number; consider replacing it with a named constant [readability-magic-numbers]
+  281 |     int choice{getValidChoice(5)};
+      |                               ^
+/home/sfmoh/projects/expense-tracker-cpp/src/ExpenseTracker.cpp:285:9: warning: use a ranges version of this algorithm [modernize-use-ranges]
+  285 |         std::sort(expenses.begin(), expenses.end(),
+      |         ^~~~~~~~~ ~~~~~~~~~~~~~~~~  ~~~~~~~~~~~~~~
+      |         std::ranges::sort expenses
+/home/sfmoh/projects/expense-tracker-cpp/src/ExpenseTracker.cpp:286:19: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  286 |                   [](const Expense &expense_a, const Expense &expense_b)
+      |                   ^
+  287 |                   {
+      |                   -> bool
+/home/sfmoh/projects/expense-tracker-cpp/src/ExpenseTracker.cpp:293:9: warning: use a ranges version of this algorithm [modernize-use-ranges]
+  293 |         std::sort(expenses.begin(), expenses.end(),
+      |         ^~~~~~~~~ ~~~~~~~~~~~~~~~~  ~~~~~~~~~~~~~~
+      |         std::ranges::sort expenses
+/home/sfmoh/projects/expense-tracker-cpp/src/ExpenseTracker.cpp:294:19: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  294 |                   [](const Expense &expense_a, const Expense &expense_b)
+      |                   ^
+  295 |                   {
+      |                   -> bool
+/home/sfmoh/projects/expense-tracker-cpp/src/ExpenseTracker.cpp:301:9: warning: use a ranges version of this algorithm [modernize-use-ranges]
+  301 |         std::sort(expenses.begin(), expenses.end(),
+      |         ^~~~~~~~~ ~~~~~~~~~~~~~~~~  ~~~~~~~~~~~~~~
+      |         std::ranges::sort expenses
+/home/sfmoh/projects/expense-tracker-cpp/src/ExpenseTracker.cpp:302:19: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  302 |                   [](const Expense &expense_a, const Expense &expense_b)
+      |                   ^
+  303 |                   {
+      |                   -> bool
+/home/sfmoh/projects/expense-tracker-cpp/src/ExpenseTracker.cpp:309:9: warning: use a ranges version of this algorithm [modernize-use-ranges]
+  309 |         std::sort(expenses.begin(), expenses.end(),
+      |         ^~~~~~~~~ ~~~~~~~~~~~~~~~~  ~~~~~~~~~~~~~~
+      |         std::ranges::sort expenses
+/home/sfmoh/projects/expense-tracker-cpp/src/ExpenseTracker.cpp:310:19: warning: use a trailing return type for this lambda [modernize-use-trailing-return-type]
+  310 |                   [](const Expense &expense_a, const Expense &expense_b)
+      |                   ^
+  311 |                   {
+      |                   -> bool
+/home/sfmoh/projects/expense-tracker-cpp/src/ExpenseTracker.cpp:342:21: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+  342 | int ExpenseTracker::getTotal() const
+      | ~~~                 ^               
+      | auto                                 -> int
+/home/sfmoh/projects/expense-tracker-cpp/src/ExpenseTracker.cpp:354:29: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+  354 | std::string ExpenseTracker::getValidCategory() const
+      | ~~~~~~~~~~~                 ^                       
+      | auto                                                 -> std::string
+/home/sfmoh/projects/expense-tracker-cpp/src/ExpenseTracker.cpp:354:29: warning: method 'getValidCategory' can be made static [readability-convert-member-functions-to-static]
+  354 | std::string ExpenseTracker::getValidCategory() const
+      |                             ^                  ~~~~~
+[  2%] Building CXX object CMakeFiles/expense_tracker_lib.dir/src/MoneyUtils.cpp.o
+/home/sfmoh/projects/expense-tracker-cpp/src/MoneyUtils.cpp:5:13: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+    5 | std::string formatMoney(int amount_in_cents)
+      | ~~~~~~~~~~~ ^                               
+      | auto                                         -> std::string
+/home/sfmoh/projects/expense-tracker-cpp/src/MoneyUtils.cpp:10:33: warning: 100 is a magic number; consider replacing it with a named constant [readability-magic-numbers]
+   10 |     amount << amount_in_cents / 100;
+      |                                 ^
+/home/sfmoh/projects/expense-tracker-cpp/src/MoneyUtils.cpp:14:33: warning: 100 is a magic number; consider replacing it with a named constant [readability-magic-numbers]
+   14 |     amount << amount_in_cents % 100;
+      |                                 ^
+[  3%] Linking CXX static library libexpense_tracker_lib.a
+[  3%] Built target expense_tracker_lib
+[  4%] Building CXX object CMakeFiles/expense_tracker.dir/src/main.cpp.o
+/home/sfmoh/projects/expense-tracker-cpp/src/main.cpp:6:5: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+    6 | int main()
+      | ~~~ ^     
+      | auto       -> int
+/home/sfmoh/projects/expense-tracker-cpp/src/main.cpp:33:39: warning: 8 is a magic number; consider replacing it with a named constant [readability-magic-numbers]
+   33 |         else if (input < 1 || input > 8)
+      |                                       ^
+/home/sfmoh/projects/expense-tracker-cpp/src/main.cpp:39:13: warning: switching on non-enum value without default case may not cover all cases [bugprone-switch-missing-default-case]
+   39 |             switch (input)
+      |             ^
+/home/sfmoh/projects/expense-tracker-cpp/src/main.cpp:69:18: warning: 5 is a magic number; consider replacing it with a named constant [readability-magic-numbers]
+   69 |             case 5:
+      |                  ^
+/home/sfmoh/projects/expense-tracker-cpp/src/main.cpp:78:18: warning: 6 is a magic number; consider replacing it with a named constant [readability-magic-numbers]
+   78 |             case 6:
+      |                  ^
+/home/sfmoh/projects/expense-tracker-cpp/src/main.cpp:81:18: warning: 7 is a magic number; consider replacing it with a named constant [readability-magic-numbers]
+   81 |             case 7:
+      |                  ^
+/home/sfmoh/projects/expense-tracker-cpp/src/main.cpp:84:18: warning: 8 is a magic number; consider replacing it with a named constant [readability-magic-numbers]
+   84 |             case 8:
+      |                  ^
+[  5%] Linking CXX executable expense_tracker
+[  5%] Built target expense_tracker
+[  5%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/benchmark/catch_chronometer.cpp.o
+[  6%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/benchmark/detail/catch_analyse.cpp.o
+[  7%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/benchmark/detail/catch_benchmark_function.cpp.o
+[  8%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/benchmark/detail/catch_run_for_at_least.cpp.o
+[  9%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/benchmark/detail/catch_stats.cpp.o
+[ 10%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/generators/catch_generator_exception.cpp.o
+[ 10%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/generators/catch_generators.cpp.o
+[ 11%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/generators/catch_generators_random.cpp.o
+[ 12%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_automake.cpp.o
+[ 13%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_common_base.cpp.o
+[ 14%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_compact.cpp.o
+[ 15%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_console.cpp.o
+[ 16%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_cumulative_base.cpp.o
+[ 16%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_event_listener.cpp.o
+[ 17%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_helpers.cpp.o
+[ 18%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_json.cpp.o
+[ 19%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_junit.cpp.o
+[ 20%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_multi.cpp.o
+[ 21%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_registrars.cpp.o
+[ 21%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_sonarqube.cpp.o
+[ 22%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_streaming_base.cpp.o
+[ 23%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_tap.cpp.o
+[ 24%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_teamcity.cpp.o
+[ 25%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_xml.cpp.o
+[ 26%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_capture.cpp.o
+[ 27%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_config.cpp.o
+[ 27%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_exception.cpp.o
+[ 28%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_generatortracker.cpp.o
+[ 29%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_registry_hub.cpp.o
+[ 30%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_reporter.cpp.o
+[ 31%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_reporter_factory.cpp.o
+[ 32%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_testcase.cpp.o
+[ 32%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_approx.cpp.o
+[ 33%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_assertion_result.cpp.o
+[ 34%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_config.cpp.o
+[ 35%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_get_random_seed.cpp.o
+[ 36%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_message.cpp.o
+[ 37%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_registry_hub.cpp.o
+[ 38%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_session.cpp.o
+[ 38%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_tag_alias_autoregistrar.cpp.o
+[ 39%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_test_case_info.cpp.o
+[ 40%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_test_spec.cpp.o
+[ 41%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_timer.cpp.o
+[ 42%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_tostring.cpp.o
+[ 43%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_totals.cpp.o
+[ 43%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_translate_exception.cpp.o
+[ 44%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_version.cpp.o
+[ 45%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_assertion_handler.cpp.o
+[ 46%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_case_insensitive_comparisons.cpp.o
+[ 47%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_clara.cpp.o
+[ 48%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_commandline.cpp.o
+[ 49%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_console_colour.cpp.o
+[ 49%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_context.cpp.o
+[ 50%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_debug_console.cpp.o
+[ 51%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_debugger.cpp.o
+[ 52%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_decomposer.cpp.o
+[ 53%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_enforce.cpp.o
+[ 54%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_enum_values_registry.cpp.o
+[ 55%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_errno_guard.cpp.o
+[ 55%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_exception_translator_registry.cpp.o
+[ 56%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_fatal_condition_handler.cpp.o
+[ 57%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_floating_point_helpers.cpp.o
+[ 58%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_getenv.cpp.o
+[ 59%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_istream.cpp.o
+[ 60%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_jsonwriter.cpp.o
+[ 60%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_lazy_expr.cpp.o
+[ 61%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_leak_detector.cpp.o
+[ 62%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_list.cpp.o
+[ 63%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_message_info.cpp.o
+[ 64%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_output_redirect.cpp.o
+[ 65%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_parse_numbers.cpp.o
+[ 66%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_polyfills.cpp.o
+[ 66%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_random_number_generator.cpp.o
+[ 67%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_random_seed_generation.cpp.o
+[ 68%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_reporter_registry.cpp.o
+[ 69%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_reporter_spec_parser.cpp.o
+[ 70%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_reusable_string_stream.cpp.o
+[ 71%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_run_context.cpp.o
+[ 71%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_section.cpp.o
+[ 72%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_singletons.cpp.o
+[ 73%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_source_line_info.cpp.o
+[ 74%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_startup_exception_registry.cpp.o
+[ 75%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_stdstreams.cpp.o
+[ 76%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_string_manip.cpp.o
+[ 77%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_stringref.cpp.o
+[ 77%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_tag_alias_registry.cpp.o
+[ 78%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_test_case_info_hasher.cpp.o
+[ 79%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_test_case_registry_impl.cpp.o
+[ 80%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_test_case_tracker.cpp.o
+[ 81%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_test_failure_exception.cpp.o
+[ 82%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_test_registry.cpp.o
+[ 82%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_test_spec_parser.cpp.o
+[ 83%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_textflow.cpp.o
+[ 84%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_uncaught_exceptions.cpp.o
+[ 85%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_wildcard_pattern.cpp.o
+[ 86%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_xmlwriter.cpp.o
+[ 87%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers.cpp.o
+[ 88%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers_container_properties.cpp.o
+[ 88%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers_exception.cpp.o
+[ 89%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers_floating_point.cpp.o
+[ 90%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers_predicate.cpp.o
+[ 91%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers_quantifiers.cpp.o
+[ 92%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers_string.cpp.o
+[ 93%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers_templated.cpp.o
+[ 93%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/matchers/internal/catch_matchers_impl.cpp.o
+[ 94%] Linking CXX static library libCatch2.a
+[ 94%] Built target Catch2
+[ 95%] Building CXX object _deps/catch2-build/src/CMakeFiles/Catch2WithMain.dir/catch2/internal/catch_main.cpp.o
+[ 96%] Linking CXX static library libCatch2Main.a
+[ 96%] Built target Catch2WithMain
+[ 97%] Building CXX object CMakeFiles/expense_tracker_tests.dir/tests/MoneyUtilsTests.cpp.o
+[ 98%] Building CXX object CMakeFiles/expense_tracker_tests.dir/tests/ExpenseTests.cpp.o
+[ 99%] Building CXX object CMakeFiles/expense_tracker_tests.dir/tests/ExpenseTrackerTests.cpp.o
+[100%] Linking CXX executable expense_tracker_tests
+[100%] Built target expense_tracker_tests

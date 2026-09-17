@@ -24,6 +24,11 @@ add_library(expense_tracker_lib
     src/MoneyUtils.cpp
 )
 
+set_target_properties(expense_tracker_lib PROPERTIES
+    CXX_CLANG_TIDY
+    "clang-tidy;-checks=bugprone-*,performance-*,modernize-*,-modernize-use-trailing-return-type"
+)
+
 target_include_directories(expense_tracker_lib PUBLIC include)
 
 target_compile_options(expense_tracker_lib PRIVATE
@@ -36,6 +41,11 @@ add_executable(expense_tracker
     src/main.cpp
 )
 
+set_target_properties(expense_tracker PROPERTIES
+    CXX_CLANG_TIDY
+    "clang-tidy;-checks=bugprone-*,performance-*,modernize-*,-modernize-use-trailing-return-type"
+)
+
 target_link_libraries(expense_tracker PRIVATE expense_tracker_lib)
 
 target_compile_options(expense_tracker PRIVATE
@@ -46,11 +56,19 @@ target_compile_options(expense_tracker PRIVATE
 
 add_executable(expense_tracker_tests
     tests/MoneyUtilsTests.cpp
+    tests/ExpenseTests.cpp
+    tests/ExpenseTrackerTests.cpp
 )
 
 target_link_libraries(expense_tracker_tests PRIVATE
     expense_tracker_lib
     Catch2::Catch2WithMain
+)
+
+target_compile_options(expense_tracker_tests PRIVATE
+    -Wall
+    -Wextra
+    -Wpedantic
 )
 
 list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)

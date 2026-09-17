@@ -8,6 +8,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <utility>
 
 void ExpenseTracker::addExpense()
 {
@@ -23,7 +24,7 @@ void ExpenseTracker::addExpense()
     std::getline(std::cin, description);
 
     Expense expense(category, amount_in_cents, description);
-    expenses.push_back(expense);
+    addExpense(expense);
 }
 
 void ExpenseTracker::viewExpenses() const
@@ -38,7 +39,7 @@ void ExpenseTracker::viewExpenses() const
 
 void ExpenseTracker::showTotal() const
 {
-    int total{calculateTotal()};
+    int total{getTotal()};
 
     std::cout << formatMoney(total) << "\n";
 }
@@ -168,7 +169,7 @@ bool ExpenseTracker::editExpense()
     {
         int amount_in_cents{getValidAmount()};
         expense.setAmountInCents(amount_in_cents);
-        
+
         return true;
     }
     case 3:
@@ -180,14 +181,13 @@ bool ExpenseTracker::editExpense()
         std::cout << "Enter New Description: ";
         std::getline(std::cin, new_description);
         expense.setDescription(new_description);
-        
+
         return true;
     }
     case 4:
+    default:
         return false;
     }
-
-    return false;
 }
 
 int ExpenseTracker::getValidAmount() const
@@ -254,7 +254,7 @@ int ExpenseTracker::getValidChoice(std::size_t max_choices) const
     int choice{};
     while (true)
     {
-        if (std::cin >> choice && choice > 0 && static_cast<std::size_t>(choice) <= max_choices)
+        if (std::cin >> choice && choice > 0 && std::cmp_less_equal(choice, max_choices))
         {
             return choice;
         }
@@ -282,35 +282,35 @@ void ExpenseTracker::sortExpenses()
 
     if (choice == 1)
     {
-        std::sort(expenses.begin(), expenses.end(),
-                  [](const Expense &expense_a, const Expense &expense_b)
-                  {
-                      return expense_a.getAmount() < expense_b.getAmount();
-                  });
+        std::ranges::sort(expenses,
+                          [](const Expense &expense_a, const Expense &expense_b)
+                          {
+                              return expense_a.getAmount() < expense_b.getAmount();
+                          });
     }
     else if (choice == 2)
     {
-        std::sort(expenses.begin(), expenses.end(),
-                  [](const Expense &expense_a, const Expense &expense_b)
-                  {
-                      return expense_a.getAmount() > expense_b.getAmount();
-                  });
+        std::ranges::sort(expenses,
+                          [](const Expense &expense_a, const Expense &expense_b)
+                          {
+                              return expense_a.getAmount() > expense_b.getAmount();
+                          });
     }
     else if (choice == 3)
     {
-        std::sort(expenses.begin(), expenses.end(),
-                  [](const Expense &expense_a, const Expense &expense_b)
-                  {
-                      return expense_a.getCategory() < expense_b.getCategory();
-                  });
+        std::ranges::sort(expenses,
+                          [](const Expense &expense_a, const Expense &expense_b)
+                          {
+                              return expense_a.getCategory() < expense_b.getCategory();
+                          });
     }
     else if (choice == 4)
     {
-        std::sort(expenses.begin(), expenses.end(),
-                  [](const Expense &expense_a, const Expense &expense_b)
-                  {
-                      return expense_a.getCategory() > expense_b.getCategory();
-                  });
+        std::ranges::sort(expenses,
+                          [](const Expense &expense_a, const Expense &expense_b)
+                          {
+                              return expense_a.getCategory() > expense_b.getCategory();
+                          });
     }
     else
     {
@@ -328,7 +328,7 @@ void ExpenseTracker::showSummary() const
         return;
     }
 
-    int total{calculateTotal()};
+    int total{getTotal()};
 
     int average{total / static_cast<int>(expenses.size())};
 
@@ -339,7 +339,7 @@ void ExpenseTracker::showSummary() const
     std::cout << "Average: " << formatMoney(average) << "\n";
 }
 
-int ExpenseTracker::calculateTotal() const
+int ExpenseTracker::getTotal() const
 {
     int total{};
 
@@ -371,4 +371,9 @@ std::string ExpenseTracker::getValidCategory() const
     }
 
     return category;
+}
+
+void ExpenseTracker::addExpense(const Expense &expense)
+{
+    expenses.push_back(expense);
 }

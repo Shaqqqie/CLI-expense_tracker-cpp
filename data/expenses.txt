@@ -3,3 +3,4 @@ Food|1300|Lunch
 Transport|500|Bus Ticket
 Food|6320|Dinner with Family
 Transport|350|Train ticket
+Entertainment|837|Cinema

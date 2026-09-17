@@ -68,7 +68,7 @@ int main()
             }
             case 5:
             {
-                if(tracker.editExpense())
+                if (tracker.editExpense())
                 {
                     tracker.saveExpenses();
                     std::cout << "Edit successful.\n";
@@ -84,6 +84,9 @@ int main()
             case 8:
                 std::cout << "Exiting Expense Tracker...\n";
                 return 0;
+            default:
+                std::cerr << "Invalid menu option.\n";
+                break;
             }
         }
     }
