@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <stdexcept>
 
 #include "ExpenseTracker.hpp"
 #include "Expense.hpp"
@@ -12,12 +13,22 @@
 void ExpenseTracker::addExpense()
 {
     std::string category{};
-    std::cout << "\nEnter Category: ";
     std::cin.ignore(
         std::numeric_limits<std::streamsize>::max(),
         '\n');
-    std::getline(std::cin, category);
+    while (true)
+    {
+        std::cout << "\nEnter Category: ";
+        std::getline(std::cin, category);
 
+        if (!category.empty())
+        {
+            break;
+        }
+
+        std::cerr << "Category cannot be empty.\n";
+    }
+    
     int amount_in_cents{getValidAmount()};
 
     std::cin.ignore(
@@ -82,18 +93,46 @@ void ExpenseTracker::loadExpenses()
         std::istringstream stream{line};
 
         std::string category{};
-        std::getline(stream, category, '|');
+        if (!std::getline(stream, category, '|') || category.empty())
+        {
+            std::cerr << "Warning: empty category in save file. Skipping expense.\n";
+            continue;
+        }
 
         std::string amount{};
-        std::getline(stream, amount, '|');
+        if (!std::getline(stream, amount, '|') || amount.empty())
+        {
+            std::cerr << "Warning: no amount value in save file. Skipping expense.\n";
+            continue;
+        }
 
         std::string description{};
         std::getline(stream, description);
 
-        int amount_in_cents{std::stoi(amount)};
+        try
+        {
+            std::size_t pos{};
+            int amount_in_cents{std::stoi(amount, &pos)};
 
-        Expense expense(category, amount_in_cents, description);
-        expenses.push_back(expense);
+            if (pos < amount.size() || amount_in_cents <= 0)
+            {
+                std::cerr << "Warning: invalid amount in save file. Skipping expense.\n";
+                continue;
+            }
+
+            Expense expense(category, amount_in_cents, description);
+            expenses.push_back(expense);
+        }
+        catch (const std::invalid_argument &error)
+        {
+            std::cout << error.what() << "\n";
+            std::cerr << "Warning: invalid amount in save file. Skipping expense.\n";
+        }
+        catch (const std::out_of_range &error)
+        {
+            std::cout << error.what() << "\n";
+            std::cerr << "Warning: amount out of range in save file. Skipping expense.\n";
+        }
     }
 }
 
