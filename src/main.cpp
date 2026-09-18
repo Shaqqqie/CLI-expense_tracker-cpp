@@ -4,6 +4,19 @@
 #include <iostream>
 #include <limits>
 
+namespace
+{
+    void displayExpenses(const std::vector<Expense> &expenses)
+    {
+        std::cout << "\n";
+        for (std::size_t i{0}; i < expenses.size(); ++i)
+        {
+            std::cout << i + 1 << '.' << expenses.at(i) << "\n";
+        }
+        std::cout << "\n";
+    }
+}
+
 int main()
 {
     int input{};
@@ -57,12 +70,30 @@ int main()
             }
             case 2:
             {
-                tracker.viewExpenses();
+                if (tracker.getExpensesCount() == 0)
+                {
+                    std::cout << "No expenses to display.\n";
+                    std::cout << "Make sure to add expenses first.\n";
+                    break;
+                }
+
+                const std::vector<Expense> &expenses{tracker.getExpenses()};
+                displayExpenses(expenses);
                 char input{};
-                std::cout << "Filter by category?(y/n)\n";
+                std::cout << "Filter by category?(Y/N)\n";
                 if (std::cin >> input && (input == 'Y' || input == 'y'))
                 {
-                    tracker.viewExpensesByCategory();
+                    std::string category{getValidCategory()};
+                    std::vector<Expense> filtered_by_category{
+                        tracker.getExpensesByCategory(category)};
+                    if (filtered_by_category.empty())
+                    {
+                        std::cout << "No existing expenses with that category.\n";
+                    }
+                    else
+                    {
+                        displayExpenses(filtered_by_category);
+                    }
                 }
                 break;
             }
@@ -77,7 +108,7 @@ int main()
                     break;
                 }
 
-                tracker.viewExpenses();
+                displayExpenses(tracker.getExpenses());
                 std::cout << "Choose expense to delete(number): ";
 
                 const int expense_to_delete{getValidChoice(tracker.getExpensesCount())};
@@ -98,7 +129,7 @@ int main()
                     break;
                 }
 
-                tracker.viewExpenses();
+                displayExpenses(tracker.getExpenses());
                 std::cout << "Choose expense to edit: ";
 
                 const int expense_to_edit{getValidChoice(tracker.getExpensesCount())};
@@ -166,31 +197,42 @@ int main()
 
                 int choice{getValidChoice(5)};
 
+                bool sorted{false};
+
                 switch (choice)
                 {
                 case 1:
                 {
                     tracker.sortExpenses(SortOption::AmountLowtoHigh);
+                    sorted = true;
                     break;
                 }
                 case 2:
                 {
                     tracker.sortExpenses(SortOption::AmountHightoLow);
+                    sorted = true;
                     break;
                 }
                 case 3:
                 {
                     tracker.sortExpenses(SortOption::CategoryAZ);
+                    sorted = true;
                     break;
                 }
                 case 4:
                 {
                     tracker.sortExpenses(SortOption::CategoryZA);
+                    sorted = true;
                     break;
                 }
                 case 5:
                 default:
                     break;
+                }
+
+                if (sorted)
+                {
+                    displayExpenses(tracker.getExpenses());
                 }
                 break;
             }

@@ -11,14 +11,9 @@
 #include <string>
 #include <utility>
 
-void ExpenseTracker::viewExpenses() const
+const std::vector<Expense> &ExpenseTracker::getExpenses() const
 {
-    std::cout << "\n";
-    for (std::size_t i{0}; i < expenses.size(); ++i)
-    {
-        std::cout << i + 1 << ". " << expenses.at(i) << "\n";
-    }
-    std::cout << "\n";
+    return expenses;
 }
 
 void ExpenseTracker::showTotal() const
@@ -119,38 +114,18 @@ bool ExpenseTracker::deleteExpense(std::size_t index)
     return true;
 }
 
-void ExpenseTracker::viewExpensesByCategory() const
+std::vector<Expense> ExpenseTracker::getExpensesByCategory(const std::string &category) const
 {
-
-    if (expenses.empty())
-    {
-        std::cout << "No expenses to filter by category.\n";
-        std::cout << "Make sure to add expenses first.\n";
-        return;
-    }
-
-    std::cin.ignore(
-        std::numeric_limits<std::streamsize>::max(),
-        '\n');
-
-    std::string category{};
-    std::cout << "Enter category: ";
-    std::getline(std::cin, category);
-    int index{1};
-
+    std::vector<Expense> filtered_by_category{};
     for (const auto &expense : expenses)
     {
         if (expense.getCategory() == category)
         {
-            std::cout << index << "." << expense << "\n";
-            ++index;
+            filtered_by_category.push_back(expense);
         }
     }
 
-    if (index == 1)
-    {
-        std::cout << "No matching expenses with that category.\n";
-    }
+    return filtered_by_category;
 }
 
 void ExpenseTracker::sortExpenses(SortOption option)
@@ -188,7 +163,6 @@ void ExpenseTracker::sortExpenses(SortOption option)
     default:
         break;
     }
-    viewExpenses();
 }
 
 void ExpenseTracker::showSummary() const

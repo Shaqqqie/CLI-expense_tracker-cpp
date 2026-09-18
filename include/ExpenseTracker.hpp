@@ -19,11 +19,11 @@ private:
     std::vector<Expense> expenses;
 
 public:
-        void addExpense(const Expense &expense);
-    void viewExpenses() const;
+    void addExpense(const Expense &expense);
+    const std::vector<Expense> &getExpenses() const;
     void showTotal() const;
     bool deleteExpense(std::size_t index);
-    void viewExpensesByCategory() const;
+    std::vector<Expense> getExpensesByCategory(const std::string &category) const;
     void sortExpenses(SortOption option);
     void showSummary() const;
     int getTotal() const;
