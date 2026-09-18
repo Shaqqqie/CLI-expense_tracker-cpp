@@ -1,4 +1,5 @@
 #include "ExpenseTracker.hpp"
+#include "InputUtils.hpp"
 
 #include <iostream>
 #include <limits>
@@ -39,10 +40,21 @@ int main()
             switch (input)
             {
             case 1:
-                tracker.addExpense();
-                std::cout << "Expense succesfully added.\n";
+            {
+                std::string category{getValidCategory()};
+                int amount_in_cents{getValidAmount()};
+                std::cin.ignore(
+                    std::numeric_limits<std::streamsize>::max(),
+                    '\n');
+                std::string description{};
+                std::cout << "Enter a description: ";
+                std::getline(std::cin, description);
+                Expense expense{category, amount_in_cents, description};
+                tracker.addExpense(expense);
+                std::cout << "Expense successfully added.\n";
                 tracker.saveExpenses();
                 break;
+            }
             case 2:
             {
                 tracker.viewExpenses();
@@ -68,10 +80,65 @@ int main()
             }
             case 5:
             {
-                if (tracker.editExpense())
+                if (tracker.getExpensesCount() == 0)
                 {
-                    tracker.saveExpenses();
-                    std::cout << "Edit successful.\n";
+                    std::cout << "No expenses to edit.\n";
+                    break;
+                }
+
+                tracker.viewExpenses();
+                std::cout << "Choose expense to edit: ";
+
+                int expense_to_edit{getValidChoice(tracker.getExpensesCount())};
+                std::size_t expense_index{static_cast<std::size_t>(expense_to_edit - 1)};
+                std::cout << "What would you like to edit?\n";
+                std::cout << "1. Category\n";
+                std::cout << "2. Amount\n";
+                std::cout << "3. Description\n";
+                std::cout << "4. Cancel\n";
+                std::cout << "Choice: ";
+                int edit{getValidChoice(4)};
+
+                switch (edit)
+                {
+                case 1:
+                {
+                    const std::string new_category{getValidCategory()};
+                    if (tracker.editExpenseCategory(expense_index, new_category))
+                    {
+                        tracker.saveExpenses();
+                        std::cout << "Edit successful\n";
+                    }
+                    break;
+                }
+                case 2:
+                {
+                    int new_amount_in_cents{getValidAmount()};
+                    if (tracker.editExpenseAmount(expense_index, new_amount_in_cents))
+                    {
+                        tracker.saveExpenses();
+                        std::cout << "Edit successful\n";
+                    }
+                    break;
+                }
+                case 3:
+                {
+                    std::cin.ignore(
+                        std::numeric_limits<std::streamsize>::max(),
+                        '\n');
+                    std::string new_description{};
+                    std::cout << "Enter new description: ";
+                    std::getline(std::cin, new_description);
+                    if (tracker.editExpenseDescription(expense_index, new_description))
+                    {
+                        tracker.saveExpenses();
+                        std::cout << "Edit successful\n";
+                    }
+                    break;
+                }
+                case 4:
+                default:
+                    break;
                 }
                 break;
             }

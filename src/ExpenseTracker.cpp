@@ -1,5 +1,6 @@
 #include "ExpenseTracker.hpp"
 #include "MoneyUtils.hpp"
+#include "InputUtils.hpp"
 
 #include <algorithm>
 #include <fstream>
@@ -9,23 +10,6 @@
 #include <stdexcept>
 #include <string>
 #include <utility>
-
-void ExpenseTracker::addExpense()
-{
-    std::string category{getValidCategory()};
-
-    int amount_in_cents{getValidAmount()};
-
-    std::cin.ignore(
-        std::numeric_limits<std::streamsize>::max(),
-        '\n');
-    std::string description{};
-    std::cout << "Enter a description: ";
-    std::getline(std::cin, description);
-
-    Expense expense(category, amount_in_cents, description);
-    addExpense(expense);
-}
 
 void ExpenseTracker::viewExpenses() const
 {
@@ -136,85 +120,6 @@ bool ExpenseTracker::deleteExpense()
     return true;
 }
 
-bool ExpenseTracker::editExpense()
-{
-    if (expenses.empty())
-    {
-        std::cout << "There are no expenses to edit.\n";
-        return false;
-    }
-
-    viewExpenses();
-    std::cout << "Choose expense to edit: ";
-    int expense_to_edit{getValidChoice(expenses.size())};
-
-    Expense &expense = expenses.at(expense_to_edit - 1);
-    std::cout << "What would you like to edit?\n";
-    std::cout << "1. Category\n";
-    std::cout << "2. Amount\n";
-    std::cout << "3. Description\n";
-    std::cout << "4. Cancel\n";
-    std::cout << "Choice: ";
-    int edit{getValidChoice(4)};
-
-    switch (edit)
-    {
-    case 1:
-    {
-        std::string new_category{getValidCategory()};
-        expense.setCategory(new_category);
-        return true;
-    }
-    case 2:
-    {
-        int amount_in_cents{getValidAmount()};
-        expense.setAmountInCents(amount_in_cents);
-
-        return true;
-    }
-    case 3:
-    {
-        std::cin.ignore(
-            std::numeric_limits<std::streamsize>::max(),
-            '\n');
-        std::string new_description{};
-        std::cout << "Enter New Description: ";
-        std::getline(std::cin, new_description);
-        expense.setDescription(new_description);
-
-        return true;
-    }
-    case 4:
-    default:
-        return false;
-    }
-}
-
-int ExpenseTracker::getValidAmount() const
-{
-    int amount_in_cents{};
-
-    while (true)
-    {
-        std::cout << "Enter amount in cents: ";
-
-        if (std::cin >> amount_in_cents && amount_in_cents > 0)
-        {
-            break;
-        }
-
-        std::cout << "Amount must be an integer greater than 0.\n";
-
-        std::cin.clear();
-
-        std::cin.ignore(
-            std::numeric_limits<std::streamsize>::max(),
-            '\n');
-    }
-
-    return amount_in_cents;
-}
-
 void ExpenseTracker::viewExpensesByCategory() const
 {
 
@@ -246,26 +151,6 @@ void ExpenseTracker::viewExpensesByCategory() const
     if (index == 1)
     {
         std::cout << "No matching expenses with that category.\n";
-    }
-}
-
-int ExpenseTracker::getValidChoice(std::size_t max_choices) const
-{
-    int choice{};
-    while (true)
-    {
-        if (std::cin >> choice && choice > 0 && std::cmp_less_equal(choice, max_choices))
-        {
-            return choice;
-        }
-
-        std::cout << "Choose a valid option: ";
-
-        std::cin.clear();
-
-        std::cin.ignore(
-            std::numeric_limits<std::streamsize>::max(),
-            '\n');
     }
 }
 
@@ -351,29 +236,52 @@ int ExpenseTracker::getTotal() const
     return total;
 }
 
-std::string ExpenseTracker::getValidCategory() const
-{
-    std::cin.ignore(
-        std::numeric_limits<std::streamsize>::max(),
-        '\n');
-    std::string category{};
-    while (true)
-    {
-        std::cout << "Enter category: ";
-        std::getline(std::cin, category);
-
-        if (!category.empty())
-        {
-            break;
-        }
-
-        std::cerr << "Category cannot be empty.\n";
-    }
-
-    return category;
-}
-
 void ExpenseTracker::addExpense(const Expense &expense)
 {
     expenses.push_back(expense);
+}
+
+std::size_t ExpenseTracker::getExpensesCount() const
+{
+    return expenses.size();
+}
+
+bool ExpenseTracker::editExpenseCategory(std::size_t index, const std::string &new_category)
+{
+    if (index >= expenses.size() || new_category.empty())
+    {
+        return false;
+    }
+    
+    Expense &expense = expenses.at(index);
+    expense.setCategory(new_category); 
+    
+    return true;
+}
+
+bool ExpenseTracker::editExpenseAmount(std::size_t index, int amount_in_cents)
+{
+    if (index >= expenses.size() || amount_in_cents <= 0)
+    {
+        return false;
+    }
+
+    Expense &expense = expenses.at(index);
+    expense.setAmountInCents(amount_in_cents);
+
+    return true;
+
+}
+
+bool ExpenseTracker::editExpenseDescription(std::size_t index, const std::string &new_description)
+{
+    if (index >= expenses.size())
+    {
+        return false;
+    }
+
+    Expense &expense = expenses.at(index);
+    expense.setDescription(new_description);
+
+    return true;
 }

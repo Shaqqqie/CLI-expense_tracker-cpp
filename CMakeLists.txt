@@ -22,6 +22,7 @@ add_library(expense_tracker_lib
     src/Expense.cpp
     src/ExpenseTracker.cpp
     src/MoneyUtils.cpp
+    src/InputUtils.cpp
 )
 
 set_target_properties(expense_tracker_lib PROPERTIES
