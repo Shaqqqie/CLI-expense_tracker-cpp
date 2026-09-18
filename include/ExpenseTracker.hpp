@@ -5,20 +5,26 @@
 #include <vector>
 #include <cstddef>
 
+enum class SortOption
+{
+    AmountLowtoHigh,
+    AmountHightoLow,
+    CategoryAZ,
+    CategoryZA
+};
+
 class ExpenseTracker
 {
 private:
     std::vector<Expense> expenses;
 
 public:
-    
-    void addExpense(const Expense &expense);
+        void addExpense(const Expense &expense);
     void viewExpenses() const;
     void showTotal() const;
     bool deleteExpense(std::size_t index);
-    bool editExpense();
     void viewExpensesByCategory() const;
-    void sortExpenses();
+    void sortExpenses(SortOption option);
     void showSummary() const;
     int getTotal() const;
     std::size_t getExpensesCount() const;

@@ -76,19 +76,19 @@ int main()
                     std::cout << "No expenses to delete.\n";
                     break;
                 }
-                
+
                 tracker.viewExpenses();
                 std::cout << "Choose expense to delete(number): ";
 
                 const int expense_to_delete{getValidChoice(tracker.getExpensesCount())};
                 std::size_t expense_index{static_cast<std::size_t>(expense_to_delete - 1)};
 
-                if(tracker.deleteExpense(expense_index))
+                if (tracker.deleteExpense(expense_index))
                 {
                     tracker.saveExpenses();
                     std::cout << "Deletion successful.\n";
                 }
-                break;  
+                break;
             }
             case 5:
             {
@@ -155,8 +155,45 @@ int main()
                 break;
             }
             case 6:
-                tracker.sortExpenses();
+            {
+                std::cout << "\nSort expenses by:\n";
+                std::cout << "1. Amount: Low to High\n";
+                std::cout << "2. Amount: High to Low\n";
+                std::cout << "3. Category: A-Z\n";
+                std::cout << "4. Category: Z-A\n";
+                std::cout << "5. Cancel\n";
+                std::cout << "Choice: ";
+
+                int choice{getValidChoice(5)};
+
+                switch (choice)
+                {
+                case 1:
+                {
+                    tracker.sortExpenses(SortOption::AmountLowtoHigh);
+                    break;
+                }
+                case 2:
+                {
+                    tracker.sortExpenses(SortOption::AmountHightoLow);
+                    break;
+                }
+                case 3:
+                {
+                    tracker.sortExpenses(SortOption::CategoryAZ);
+                    break;
+                }
+                case 4:
+                {
+                    tracker.sortExpenses(SortOption::CategoryZA);
+                    break;
+                }
+                case 5:
+                default:
+                    break;
+                }
                 break;
+            }
             case 7:
                 tracker.showSummary();
                 break;

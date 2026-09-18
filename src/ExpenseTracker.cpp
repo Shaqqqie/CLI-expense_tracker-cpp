@@ -111,10 +111,9 @@ bool ExpenseTracker::deleteExpense(std::size_t index)
     {
         return false;
     }
-    
+
     const auto offset{
-        static_cast<std::vector<Expense>::difference_type>(index)
-    };
+        static_cast<std::vector<Expense>::difference_type>(index)};
 
     expenses.erase(expenses.begin() + offset);
     return true;
@@ -154,52 +153,40 @@ void ExpenseTracker::viewExpensesByCategory() const
     }
 }
 
-void ExpenseTracker::sortExpenses()
+void ExpenseTracker::sortExpenses(SortOption option)
 {
-    std::cout << "\nSort expenses by:\n";
-    std::cout << "1. Amount: Low to High\n";
-    std::cout << "2. Amount: High to Low\n";
-    std::cout << "3. Category: A-Z\n";
-    std::cout << "4. Category: Z-A\n";
-    std::cout << "5. Cancel\n";
-    std::cout << "Choice: ";
-    int choice{getValidChoice(5)};
-
-    if (choice == 1)
+    switch (option)
     {
+    case SortOption::AmountLowtoHigh:
         std::ranges::sort(expenses,
                           [](const Expense &expense_a, const Expense &expense_b)
                           {
                               return expense_a.getAmount() < expense_b.getAmount();
                           });
-    }
-    else if (choice == 2)
-    {
+        break;
+    case SortOption::AmountHightoLow:
         std::ranges::sort(expenses,
                           [](const Expense &expense_a, const Expense &expense_b)
                           {
                               return expense_a.getAmount() > expense_b.getAmount();
                           });
-    }
-    else if (choice == 3)
-    {
+        break;
+    case SortOption::CategoryAZ:
         std::ranges::sort(expenses,
                           [](const Expense &expense_a, const Expense &expense_b)
                           {
                               return expense_a.getCategory() < expense_b.getCategory();
                           });
-    }
-    else if (choice == 4)
-    {
+        break;
+    case SortOption::CategoryZA:
         std::ranges::sort(expenses,
                           [](const Expense &expense_a, const Expense &expense_b)
                           {
                               return expense_a.getCategory() > expense_b.getCategory();
                           });
-    }
-    else
-    {
-        return;
+        break;
+    default:
+        break;
     }
     viewExpenses();
 }
@@ -252,10 +239,10 @@ bool ExpenseTracker::editExpenseCategory(std::size_t index, const std::string &n
     {
         return false;
     }
-    
+
     Expense &expense = expenses.at(index);
-    expense.setCategory(new_category); 
-    
+    expense.setCategory(new_category);
+
     return true;
 }
 
@@ -270,7 +257,6 @@ bool ExpenseTracker::editExpenseAmount(std::size_t index, int amount_in_cents)
     expense.setAmountInCents(amount_in_cents);
 
     return true;
-
 }
 
 bool ExpenseTracker::editExpenseDescription(std::size_t index, const std::string &new_description)
