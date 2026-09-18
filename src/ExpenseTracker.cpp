@@ -125,14 +125,14 @@ void ExpenseTracker::sortExpenses(SortOption option)
 {
     switch (option)
     {
-    case SortOption::AmountLowtoHigh:
+    case SortOption::AmountLowToHigh:
         std::ranges::sort(expenses,
                           [](const Expense &expense_a, const Expense &expense_b)
                           {
                               return expense_a.getAmount() < expense_b.getAmount();
                           });
         break;
-    case SortOption::AmountHightoLow:
+    case SortOption::AmountHighToLow:
         std::ranges::sort(expenses,
                           [](const Expense &expense_a, const Expense &expense_b)
                           {
@@ -156,26 +156,6 @@ void ExpenseTracker::sortExpenses(SortOption option)
     default:
         break;
     }
-}
-
-void ExpenseTracker::showSummary() const
-{
-
-    if (expenses.empty())
-    {
-        std::cout << "No expenses exist.\n";
-        return;
-    }
-
-    int total{getTotal()};
-
-    int average{total / static_cast<int>(expenses.size())};
-
-    std::cout << "\nExpense Summary\n";
-    std::cout << "---------------------------\n";
-    std::cout << "Number of expenses: " << expenses.size() << "\n";
-    std::cout << "Total: " << formatMoney(total) << "\n";
-    std::cout << "Average: " << formatMoney(average) << "\n";
 }
 
 int ExpenseTracker::getTotal() const

@@ -99,11 +99,11 @@ int main()
                 break;
             }
             case 3:
-                {
-                    const int total{tracker.getTotal()};
-                    std::cout << formatMoney(total) << "\n";
-                    break;
-                }
+            {
+                const int total{tracker.getTotal()};
+                std::cout << formatMoney(total) << "\n";
+                break;
+            }
             case 4:
             {
                 if (tracker.getExpensesCount() == 0)
@@ -207,13 +207,13 @@ int main()
                 {
                 case 1:
                 {
-                    tracker.sortExpenses(SortOption::AmountLowtoHigh);
+                    tracker.sortExpenses(SortOption::AmountLowToHigh);
                     sorted = true;
                     break;
                 }
                 case 2:
                 {
-                    tracker.sortExpenses(SortOption::AmountHightoLow);
+                    tracker.sortExpenses(SortOption::AmountHighToLow);
                     sorted = true;
                     break;
                 }
@@ -241,8 +241,25 @@ int main()
                 break;
             }
             case 7:
-                tracker.showSummary();
+            {
+                if (tracker.getExpensesCount() == 0)
+                {
+                    std::cout << "No expenses exist.\n";
+                    std::cout << "Make sure to add expenses first.\n";
+                    break;
+                }
+
+                int total{tracker.getTotal()};
+                std::size_t expenses_count{tracker.getExpensesCount()};
+                int average{total / static_cast<int>(expenses_count)};
+                
+                std::cout << "\nExpense Summary\n";
+                std::cout << "----------------------------\n";
+                std::cout << "Number of expenses: " << tracker.getExpensesCount() << "\n";
+                std::cout << "Total: " << formatMoney(total) << "\n";
+                std::cout << "Average: " << formatMoney(average) << "\n";
                 break;
+            }
             case 8:
                 std::cout << "Exiting Expense Tracker...\n";
                 return 0;
