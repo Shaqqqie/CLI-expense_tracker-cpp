@@ -15,7 +15,7 @@ public:
     void addExpense(const Expense &expense);
     void viewExpenses() const;
     void showTotal() const;
-    bool deleteExpense();
+    bool deleteExpense(std::size_t index);
     bool editExpense();
     void viewExpensesByCategory() const;
     void sortExpenses();

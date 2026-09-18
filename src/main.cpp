@@ -71,12 +71,24 @@ int main()
                 break;
             case 4:
             {
-                if (tracker.deleteExpense())
+                if (tracker.getExpensesCount() == 0)
+                {
+                    std::cout << "No expenses to delete.\n";
+                    break;
+                }
+                
+                tracker.viewExpenses();
+                std::cout << "Choose expense to delete(number): ";
+
+                const int expense_to_delete{getValidChoice(tracker.getExpensesCount())};
+                std::size_t expense_index{static_cast<std::size_t>(expense_to_delete - 1)};
+
+                if(tracker.deleteExpense(expense_index))
                 {
                     tracker.saveExpenses();
-                    std::cout << "Expense successfully deleted.\n";
+                    std::cout << "Deletion successful.\n";
                 }
-                break;
+                break;  
             }
             case 5:
             {
@@ -89,7 +101,7 @@ int main()
                 tracker.viewExpenses();
                 std::cout << "Choose expense to edit: ";
 
-                int expense_to_edit{getValidChoice(tracker.getExpensesCount())};
+                const int expense_to_edit{getValidChoice(tracker.getExpensesCount())};
                 std::size_t expense_index{static_cast<std::size_t>(expense_to_edit - 1)};
                 std::cout << "What would you like to edit?\n";
                 std::cout << "1. Category\n";
@@ -97,7 +109,7 @@ int main()
                 std::cout << "3. Description\n";
                 std::cout << "4. Cancel\n";
                 std::cout << "Choice: ";
-                int edit{getValidChoice(4)};
+                const int edit{getValidChoice(4)};
 
                 switch (edit)
                 {

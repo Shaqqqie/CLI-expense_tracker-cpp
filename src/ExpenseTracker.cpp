@@ -105,18 +105,18 @@ void ExpenseTracker::loadExpenses()
     }
 }
 
-bool ExpenseTracker::deleteExpense()
+bool ExpenseTracker::deleteExpense(std::size_t index)
 {
-    if (expenses.empty())
+    if (index >= expenses.size())
     {
-        std::cout << "There are no expenses to be deleted.\n";
         return false;
     }
-    viewExpenses();
-    std::cout << "Choose expense to delete(number): ";
-    int expense_to_delete{getValidChoice(expenses.size())};
+    
+    const auto offset{
+        static_cast<std::vector<Expense>::difference_type>(index)
+    };
 
-    expenses.erase(expenses.begin() + (expense_to_delete - 1));
+    expenses.erase(expenses.begin() + offset);
     return true;
 }
 
