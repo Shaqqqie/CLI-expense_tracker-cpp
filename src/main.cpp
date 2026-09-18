@@ -1,5 +1,6 @@
 #include "ExpenseTracker.hpp"
 #include "InputUtils.hpp"
+#include "MoneyUtils.hpp"
 
 #include <iostream>
 #include <limits>
@@ -98,8 +99,11 @@ int main()
                 break;
             }
             case 3:
-                tracker.showTotal();
-                break;
+                {
+                    const int total{tracker.getTotal()};
+                    std::cout << formatMoney(total) << "\n";
+                    break;
+                }
             case 4:
             {
                 if (tracker.getExpensesCount() == 0)

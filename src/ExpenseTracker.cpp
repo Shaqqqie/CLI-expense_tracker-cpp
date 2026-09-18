@@ -16,13 +16,6 @@ const std::vector<Expense> &ExpenseTracker::getExpenses() const
     return expenses;
 }
 
-void ExpenseTracker::showTotal() const
-{
-    int total{getTotal()};
-
-    std::cout << formatMoney(total) << "\n";
-}
-
 void ExpenseTracker::saveExpenses() const
 {
     std::ofstream file{"data/expenses.txt"};

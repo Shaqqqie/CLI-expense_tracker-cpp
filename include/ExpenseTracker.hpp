@@ -21,7 +21,6 @@ private:
 public:
     void addExpense(const Expense &expense);
     const std::vector<Expense> &getExpenses() const;
-    void showTotal() const;
     bool deleteExpense(std::size_t index);
     std::vector<Expense> getExpensesByCategory(const std::string &category) const;
     void sortExpenses(SortOption option);
