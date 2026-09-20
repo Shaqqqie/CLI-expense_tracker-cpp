@@ -6,6 +6,14 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+find_program(CPPCHECK cppcheck)
+
+find_program(CPPCHECK cppcheck)
+
+if(NOT CPPCHECK)
+    message(WARNING "cppcheck not found")
+endif()
+
 include(CTest)
 
 include(FetchContent)
@@ -30,6 +38,13 @@ set_target_properties(expense_tracker_lib PROPERTIES
     "clang-tidy;-checks=bugprone-*,performance-*,modernize-*,-modernize-use-trailing-return-type"
 )
 
+if(CPPCHECK)
+    set_target_properties(expense_tracker_lib PROPERTIES
+        CXX_CPPCHECK
+            "${CPPCHECK};--enable=warning,style,performance,portability;--suppress=missingIncludeSystem;--suppress=unusedFunction;--inline-suppr"
+    )
+endif()
+
 target_include_directories(expense_tracker_lib PUBLIC include)
 
 if (MSVC)
@@ -48,6 +63,13 @@ set_target_properties(expense_tracker PROPERTIES
     CXX_CLANG_TIDY
     "clang-tidy;-checks=bugprone-*,performance-*,modernize-*,-modernize-use-trailing-return-type"
 )
+
+if(CPPCHECK)
+    set_target_properties(expense_tracker PROPERTIES
+        CXX_CPPCHECK
+            "${CPPCHECK};--enable=warning,style,performance,portability;--suppress=missingIncludeSystem;--suppress=unusedFunction;--inline-suppr"
+    )
+endif()
 
 target_link_libraries(expense_tracker PRIVATE expense_tracker_lib)
 
