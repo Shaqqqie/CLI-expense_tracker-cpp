@@ -18,7 +18,7 @@ jobs:
               uses: actions/checkout@v4  
 
             - name: Configure CMake
-              run: cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DCMAKE_CXX_COMPILER=${{ matrix.compiler }} -DENABLE_SANITIZERS=ON    
+              run: cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DCMAKE_CXX_COMPILER=${{ matrix.compiler }} 
 
             - name: Build
               run: cmake --build build
@@ -46,3 +46,18 @@ jobs:
             - name: Run tests
               run: ctest --test-dir build -C ${{ matrix.build_type }} --output-on-failure 
     
+    sanitizers:
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+
+        - name: Configure CMake
+          run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ -DENABLE_SANITIZERS=ON
+
+        - name: Build
+          run: cmake --build build
+
+        - name: Run tests
+          run: ctest --test-dir build --output-on-failure
