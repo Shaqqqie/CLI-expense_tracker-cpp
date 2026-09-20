@@ -32,11 +32,13 @@ set_target_properties(expense_tracker_lib PROPERTIES
 
 target_include_directories(expense_tracker_lib PUBLIC include)
 
-target_compile_options(expense_tracker_lib PRIVATE
-    -Wall
-    -Wextra
-    -Wpedantic    
-)
+if (MSVC)
+    set(PROJECT_WARNINGS /W4)
+else ()
+    set(PROJECT_WARNINGS -Wall -Wextra -Wpedantic)
+endif()
+
+target_compile_options(expense_tracker_lib PRIVATE ${PROJECT_WARNINGS})
 
 add_executable(expense_tracker
     src/main.cpp
@@ -49,11 +51,8 @@ set_target_properties(expense_tracker PROPERTIES
 
 target_link_libraries(expense_tracker PRIVATE expense_tracker_lib)
 
-target_compile_options(expense_tracker PRIVATE
-    -Wall
-    -Wextra
-    -Wpedantic
-)
+target_compile_options(expense_tracker PRIVATE ${PROJECT_WARNINGS})
+
 
 add_executable(expense_tracker_tests
     tests/MoneyUtilsTests.cpp
@@ -66,11 +65,8 @@ target_link_libraries(expense_tracker_tests PRIVATE
     Catch2::Catch2WithMain
 )
 
-target_compile_options(expense_tracker_tests PRIVATE
-    -Wall
-    -Wextra
-    -Wpedantic
-)
+target_compile_options(expense_tracker_tests PRIVATE ${PROJECT_WARNINGS})
+
 
 list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
 include(Catch)
