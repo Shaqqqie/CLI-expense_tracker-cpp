@@ -8,12 +8,19 @@ jobs:
     build:
         runs-on: ubuntu-latest
 
+        strategy: 
+            matrix:
+                build_type: [Debug, Release]
+
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4  
+
             - name: Configure CMake
-              run: cmake -S . -B build      
+              run: cmake -S . -B build -DCMAKE_BUILD_TYPE=${{matrix.build_type}}    
+               
             - name: Build
-              run: cmake --build build      
+              run: cmake --build build
+
             - name: Run tests
               run: ctest --test-dir build --output-on-failure
