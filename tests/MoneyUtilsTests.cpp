@@ -6,7 +6,7 @@ TEST_CASE("formatMoney formats cents as currency")
 {
     SECTION("formats a normal amount")
     {
-        REQUIRE(formatMoney(1250) == "$999.99");
+        REQUIRE(formatMoney(1250) == "$12.50");
     }
 
     SECTION("formats an exact dollar amount")
