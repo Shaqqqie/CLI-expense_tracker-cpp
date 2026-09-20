@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-find_program(CPPCHECK cppcheck)
+option(ENABLE_SANITIZERS "Enable AddressSanitizer and UndefinedBehavior Sanitizer" OFF)
 
 find_program(CPPCHECK cppcheck)
 
@@ -55,6 +55,13 @@ endif()
 
 target_compile_options(expense_tracker_lib PRIVATE ${PROJECT_WARNINGS})
 
+if(ENABLE_SANITIZERS)
+    target_compile_options(expense_tracker_lib PRIVATE
+        -fsanitize=address,undefined
+        -fno-omit-frame-pointer
+    )
+endif()
+
 add_executable(expense_tracker
     src/main.cpp
 )
@@ -75,6 +82,17 @@ target_link_libraries(expense_tracker PRIVATE expense_tracker_lib)
 
 target_compile_options(expense_tracker PRIVATE ${PROJECT_WARNINGS})
 
+if(ENABLE_SANITIZERS)
+    target_compile_options(expense_tracker PRIVATE
+        -fsanitize=address,undefined
+        -fno-omit-frame-pointer
+    )
+
+    target_link_options(expense_tracker PRIVATE
+        -fsanitize=address,undefined
+    )
+endif()
+
 
 add_executable(expense_tracker_tests
     tests/MoneyUtilsTests.cpp
@@ -88,6 +106,17 @@ target_link_libraries(expense_tracker_tests PRIVATE
 )
 
 target_compile_options(expense_tracker_tests PRIVATE ${PROJECT_WARNINGS})
+
+if(ENABLE_SANITIZERS)
+    target_compile_options(expense_tracker_tests PRIVATE
+        -fsanitize=address,undefined
+        -fno-omit-frame-pointer
+    )
+
+    target_link_options(expense_tracker_tests PRIVATE
+        -fsanitize=address,undefined
+    )
+endif()
 
 
 list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
