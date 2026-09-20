@@ -11,14 +11,15 @@ jobs:
         strategy: 
             matrix:
                 build_type: [Debug, Release]
+                compiler: [g++, clang++]
 
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4  
 
             - name: Configure CMake
-              run: cmake -S . -B build -DCMAKE_BUILD_TYPE=${{matrix.build_type}}    
-               
+              run: cmake -S . -B build -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DCMAKE_CXX_COMPILER=${{matrix.compiler}}    
+
             - name: Build
               run: cmake --build build
 
