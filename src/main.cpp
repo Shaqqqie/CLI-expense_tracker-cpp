@@ -1,9 +1,13 @@
+#include "Expense.hpp"
 #include "ExpenseTracker.hpp"
 #include "InputUtils.hpp"
 #include "MoneyUtils.hpp"
 
+#include <cstddef>
 #include <iostream>
 #include <limits>
+#include <string>
+#include <vector>
 
 namespace
 {
@@ -20,7 +24,7 @@ namespace
 
 int main()
 {
-    int input{};
+    int menu_choice{};
     ExpenseTracker tracker;
     tracker.loadExpenses();
     while (true)
@@ -36,7 +40,7 @@ int main()
         std::cout << "8. Exit\n";
         std::cout << "Choose an option: ";
 
-        if (!(std::cin >> input))
+        if (!(std::cin >> menu_choice))
         {
             std::cout << "\nNot valid input.\n";
 
@@ -45,18 +49,22 @@ int main()
                 std::numeric_limits<std::streamsize>::max(),
                 '\n');
         }
-        else if (input < 1 || input > 8)
+        else if (menu_choice < 1 || menu_choice > 8)
         {
             std::cout << "\nChoose a valid option\n";
         }
         else
         {
-            switch (input)
+            switch (menu_choice)
             {
             case 1:
             {
-                std::string category{getValidCategory()};
-                int amount_in_cents{getValidAmount()};
+                std::cin.ignore(
+                    std::numeric_limits<std::streamsize>::max(),
+                    '\n'
+                );
+                const std::string category{getValidCategory()};
+                const int amount_in_cents{getValidAmount()};
                 std::cin.ignore(
                     std::numeric_limits<std::streamsize>::max(),
                     '\n');
@@ -71,7 +79,7 @@ int main()
             }
             case 2:
             {
-                if (tracker.getExpensesCount() == 0)
+                if (tracker.getExpenseCount() == 0)
                 {
                     std::cout << "No expenses to display.\n";
                     std::cout << "Make sure to add expenses first.\n";
@@ -80,12 +88,16 @@ int main()
 
                 const std::vector<Expense> &expenses{tracker.getExpenses()};
                 displayExpenses(expenses);
-                char input{};
+                char confirmation{};
                 std::cout << "Filter by category?(Y/N)\n";
-                if (std::cin >> input && (input == 'Y' || input == 'y'))
+                if (std::cin >> confirmation && (confirmation == 'Y' || confirmation == 'y'))
                 {
-                    std::string category{getValidCategory()};
-                    std::vector<Expense> filtered_by_category{
+                    std::cin.ignore(
+                        std::numeric_limits<std::streamsize>::max(),
+                        '\n'
+                    );
+                    const std::string category{getValidCategory()};
+                    const std::vector<Expense> filtered_by_category{
                         tracker.getExpensesByCategory(category)};
                     if (filtered_by_category.empty())
                     {
@@ -106,7 +118,7 @@ int main()
             }
             case 4:
             {
-                if (tracker.getExpensesCount() == 0)
+                if (tracker.getExpenseCount() == 0)
                 {
                     std::cout << "No expenses to delete.\n";
                     break;
@@ -115,8 +127,8 @@ int main()
                 displayExpenses(tracker.getExpenses());
                 std::cout << "Choose expense to delete(number): ";
 
-                const int expense_to_delete{getValidChoice(tracker.getExpensesCount())};
-                std::size_t expense_index{static_cast<std::size_t>(expense_to_delete - 1)};
+                const int expense_to_delete{getValidChoice(tracker.getExpenseCount())};
+                const std::size_t expense_index{static_cast<std::size_t>(expense_to_delete - 1)};
 
                 if (tracker.deleteExpense(expense_index))
                 {
@@ -127,7 +139,7 @@ int main()
             }
             case 5:
             {
-                if (tracker.getExpensesCount() == 0)
+                if (tracker.getExpenseCount() == 0)
                 {
                     std::cout << "No expenses to edit.\n";
                     break;
@@ -136,8 +148,8 @@ int main()
                 displayExpenses(tracker.getExpenses());
                 std::cout << "Choose expense to edit: ";
 
-                const int expense_to_edit{getValidChoice(tracker.getExpensesCount())};
-                std::size_t expense_index{static_cast<std::size_t>(expense_to_edit - 1)};
+                const int expense_to_edit{getValidChoice(tracker.getExpenseCount())};
+                const std::size_t expense_index{static_cast<std::size_t>(expense_to_edit - 1)};
                 std::cout << "What would you like to edit?\n";
                 std::cout << "1. Category\n";
                 std::cout << "2. Amount\n";
@@ -150,6 +162,10 @@ int main()
                 {
                 case 1:
                 {
+                    std::cin.ignore(
+                        std::numeric_limits<std::streamsize>::max(),
+                        '\n'
+                    );
                     const std::string new_category{getValidCategory()};
                     if (tracker.editExpenseCategory(expense_index, new_category))
                     {
@@ -160,7 +176,7 @@ int main()
                 }
                 case 2:
                 {
-                    int new_amount_in_cents{getValidAmount()};
+                    const int new_amount_in_cents{getValidAmount()};
                     if (tracker.editExpenseAmount(expense_index, new_amount_in_cents))
                     {
                         tracker.saveExpenses();
@@ -199,7 +215,7 @@ int main()
                 std::cout << "5. Cancel\n";
                 std::cout << "Choice: ";
 
-                int choice{getValidChoice(5)};
+                const int choice{getValidChoice(5)};
 
                 bool sorted{false};
 
@@ -242,20 +258,20 @@ int main()
             }
             case 7:
             {
-                if (tracker.getExpensesCount() == 0)
+                if (tracker.getExpenseCount() == 0)
                 {
                     std::cout << "No expenses exist.\n";
                     std::cout << "Make sure to add expenses first.\n";
                     break;
                 }
 
-                int total{tracker.getTotal()};
-                std::size_t expenses_count{tracker.getExpensesCount()};
-                int average{total / static_cast<int>(expenses_count)};
+                const int total{tracker.getTotal()};
+                const std::size_t expense_count{tracker.getExpenseCount()};
+                const int average{total / static_cast<int>(expense_count)};
                 
                 std::cout << "\nExpense Summary\n";
                 std::cout << "----------------------------\n";
-                std::cout << "Number of expenses: " << tracker.getExpensesCount() << "\n";
+                std::cout << "Number of expenses: " << expense_count << "\n";
                 std::cout << "Total: " << formatMoney(total) << "\n";
                 std::cout << "Average: " << formatMoney(average) << "\n";
                 break;

@@ -1,15 +1,11 @@
 #include "ExpenseTracker.hpp"
-#include "MoneyUtils.hpp"
-#include "InputUtils.hpp"
 
 #include <algorithm>
 #include <fstream>
 #include <iostream>
-#include <limits>
 #include <sstream>
-#include <stdexcept>
 #include <string>
-#include <utility>
+
 
 const std::vector<Expense> &ExpenseTracker::getExpenses() const
 {
@@ -44,6 +40,7 @@ void ExpenseTracker::loadExpenses()
         return;
     }
 
+    expenses.clear();
     std::string line{};
     while (std::getline(file, line))
     {
@@ -71,7 +68,7 @@ void ExpenseTracker::loadExpenses()
             std::size_t pos{};
             int amount_in_cents{std::stoi(amount, &pos)};
 
-            if (pos < amount.size() || amount_in_cents <= 0)
+            if (pos != amount.size() || amount_in_cents <= 0)
             {
                 std::cerr << "Warning: invalid amount in save file. Skipping expense.\n";
                 continue;
@@ -80,14 +77,12 @@ void ExpenseTracker::loadExpenses()
             Expense expense(category, amount_in_cents, description);
             expenses.push_back(expense);
         }
-        catch (const std::invalid_argument &error)
+        catch (const std::invalid_argument &)
         {
-            std::cout << error.what() << "\n";
             std::cerr << "Warning: invalid amount in save file. Skipping expense.\n";
         }
-        catch (const std::out_of_range &error)
+        catch (const std::out_of_range &)
         {
-            std::cout << error.what() << "\n";
             std::cerr << "Warning: amount out of range in save file. Skipping expense.\n";
         }
     }
@@ -175,14 +170,14 @@ void ExpenseTracker::addExpense(const Expense &expense)
     expenses.push_back(expense);
 }
 
-std::size_t ExpenseTracker::getExpensesCount() const
+std::size_t ExpenseTracker::getExpenseCount() const
 {
     return expenses.size();
 }
 
 bool ExpenseTracker::editExpenseCategory(std::size_t index, const std::string &new_category)
 {
-    if (index >= expenses.size() || new_category.empty())
+    if (index >= expenses.size())
     {
         return false;
     }
@@ -195,7 +190,7 @@ bool ExpenseTracker::editExpenseCategory(std::size_t index, const std::string &n
 
 bool ExpenseTracker::editExpenseAmount(std::size_t index, int amount_in_cents)
 {
-    if (index >= expenses.size() || amount_in_cents <= 0)
+    if (index >= expenses.size())
     {
         return false;
     }

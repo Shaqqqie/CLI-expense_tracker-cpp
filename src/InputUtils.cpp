@@ -52,10 +52,6 @@ int getValidChoice(std::size_t max_choices)
 
 std::string getValidCategory()
 {
-    std::cin.ignore(
-        std::numeric_limits<std::streamsize>::max(),
-        '\n'
-    );
     std::string category{};
     while(true)
     {

@@ -32,7 +32,7 @@ public:
     const std::vector<Expense> &getExpenses() const;
     std::vector<Expense> getExpensesByCategory(const std::string &category) const;
     int getTotal() const;
-    std::size_t getExpensesCount() const;
+    std::size_t getExpenseCount() const;
 
     // Persistence
     void saveExpenses() const;

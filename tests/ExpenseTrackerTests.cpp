@@ -3,6 +3,8 @@
 #include "Expense.hpp"
 #include "ExpenseTracker.hpp"
 
+#include <stdexcept>
+
 // ----------------------------------------
 // Add / Get Expenses
 // ----------------------------------------
@@ -13,7 +15,7 @@ TEST_CASE("ExpenseTracker can add expenses")
 
     tracker.addExpense(Expense{"Food", 1250, "Dinner"});
 
-    REQUIRE(tracker.getExpensesCount() == 1);
+    REQUIRE(tracker.getExpenseCount() == 1);
     REQUIRE(tracker.getExpenses().at(0).getCategory() == "Food");
     REQUIRE(tracker.getExpenses().at(0).getAmount() == 1250);
     REQUIRE(tracker.getExpenses().at(0).getDescription() == "Dinner");
@@ -53,7 +55,7 @@ TEST_CASE("ExpenseTracker can delete an expense")
     tracker.addExpense(Expense{"Transport", 450, "Bus Ticket"});
 
     REQUIRE(tracker.deleteExpense(0));
-    REQUIRE(tracker.getExpensesCount() == 1);
+    REQUIRE(tracker.getExpenseCount() == 1);
 
     REQUIRE(tracker.getExpenses().at(0).getCategory() == "Transport");
 }
@@ -65,7 +67,16 @@ TEST_CASE("ExpenseTracker rejects invalid delete index")
     tracker.addExpense(Expense{"Food", 1250, "Dinner"});
 
     REQUIRE_FALSE(tracker.deleteExpense(4));
-    REQUIRE(tracker.getExpensesCount() == 1);
+    REQUIRE(tracker.getExpenseCount() == 1);
+}
+
+TEST_CASE("ExpenseTracker rejects deletion when only one expense exists")
+{
+    ExpenseTracker tracker;
+
+    tracker.addExpense(Expense{"Food", 1250, "Dinner"});
+
+    REQUIRE_FALSE(tracker.deleteExpense(tracker.getExpenseCount()));
 }
 
 // ------------------------------------------
@@ -89,7 +100,7 @@ TEST_CASE("ExpenseTracker rejects empty category")
 
     tracker.addExpense(Expense{"Food", 1250, "Dinner"});
 
-    REQUIRE_FALSE(tracker.editExpenseCategory(0, ""));
+    REQUIRE_THROWS_AS(tracker.editExpenseCategory(0, ""), std::invalid_argument);
 
     REQUIRE(tracker.getExpenses().at(0).getCategory() == "Food");
 }
@@ -110,7 +121,7 @@ TEST_CASE("ExpenseTracker rejects invalid expense amount")
 
     tracker.addExpense(Expense{"Food", 1250, "Dinner"});
 
-    REQUIRE_FALSE(tracker.editExpenseAmount(0, -500));
+    REQUIRE_THROWS_AS(tracker.editExpenseAmount(0, -500), std::invalid_argument);
     REQUIRE(tracker.getExpenses().at(0).getAmount() == 1250);
 }
 

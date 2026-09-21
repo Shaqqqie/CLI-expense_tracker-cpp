@@ -3,3 +3,4 @@ Transport|500|Bus Ticket
 Food|6320|Dinner with Family
 Transport|350|Train ticket
 Food|400|Snack
+Drer|500|Snack

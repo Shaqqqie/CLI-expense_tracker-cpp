@@ -24,3 +24,25 @@ TEST_CASE("Expense setters update its values")
     REQUIRE(expense.getDescription() == "Bus Ticket");
 }
 
+TEST_CASE("Constructor throws exception for empty category")
+{
+    REQUIRE_THROWS_AS(Expense("", 1250, "Lunch"), std::invalid_argument);
+}
+
+TEST_CASE("setCategory throws exception for empty category")
+{
+    Expense expense("Food", 1250, "Lunch");
+    REQUIRE_THROWS_AS(expense.setCategory(""), std::invalid_argument);
+}
+
+TEST_CASE("Constructor throws rejection when amount equals 0")
+{
+    REQUIRE_THROWS_AS(Expense("Food", 0, "Lunch"), std::invalid_argument);
+}
+
+TEST_CASE("setAmountInCents throws exception when new amount equals 0")
+{
+    Expense expense("Food", 1250, "Lunch");
+
+    REQUIRE_THROWS_AS(expense.setAmountInCents(0), std::invalid_argument);
+}
